@@ -1,4 +1,0 @@
-\contentsline {chapter}{\numberline {第1章}これはchapter}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}これはsection}{2}{section.1.1}%
-\contentsline {chapter}{\numberline {第2章}これはchapter}{4}{chapter.2}%
-\contentsline {section}{\numberline {2.1}これはsection}{4}{section.2.1}%
