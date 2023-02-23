@@ -20,6 +20,16 @@
             "-f", "-gg", "-pv", "-latex='platex'", "-latexoption='-kanji=utf8 -no-guess-input-env'", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOC%"
           ]
         },
+        {
+          "name": "ptex2pdf",
+          "command": "ptex2pdf",
+          "args": [
+              "-l",
+              "-ot",
+              "-kanji=utf8 -synctex=1",
+              "%DOC%"
+          ]
+        },
     ],
 
     // latex-workshop.latex.recipes: Recipe の定義
@@ -36,6 +46,12 @@
           "name": "pLaTeX",
           "tools": [
             "Latexmk (pLaTeX)"
+          ]
+        },
+        {
+          "name": "ptex2pdf",
+          "tools": [
+              "ptex2pdf"
           ]
         },
     ],
