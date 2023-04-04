@@ -1,20 +1,20 @@
+\usepackage{url}
 \chapter{DiscordBotを作ってみよう!}
 
 \section{DiscordBotを作ってみよう}
 \subsection{はじめに}
-初めに今回何故DiscordのBotを作ろうと思ったかの経緯をお話しします。
-私はDiscordで人とチャットをしている時に同じ会話が頻繁に続き、これBotで返事を返すようにしたら返事を返す手間が省けるし面白いのでは？と思ったのがBotを作ろうと思ったきっかけです。
+はじめまして、sudaです。私はDiscordで人とチャットをしている時に同じ会話が頻繁に続き、これBotで返事を返すようにしたら返事を返す手間が省けるし面白いのでは？と思いBotを作ることにしました。
 発想がひどいって！？まあでも自分の発想したものを形にすることが面白いことだと思うので今回はそこには目を瞑りましょう…
 もちろん自分が送ったメッセージに対してBotに返答させることもできるので、自分だけのオリジナルDiscordBotを作ってみましょう！
 
 \subsection{何を作るのか}
-Discordのサーバで特定のメッセージが来たら、特定のメッセージを返すDiscordのBotを作ります。\\
-例\\
-自分「仕事終わった」\\
-Bot 「お疲れ様」\\
+Discordのサーバで特定のメッセージが来たら、特定のメッセージを返すDiscordのBotを作ります。
+サンプルプログラムを参照したい方は以下のURLからご覧下さい。
+\footnote{今回作るDiscordBotのサンプルプログラム\url{https://github.com/sudamichiyo/Discord_Bot_sampleprogram.git}}
+例えば自分が「仕事終わった」と言うとBotが「お疲れ様」と返してくれます。
 \section{実行環境・使用技術}
 \begin{itemize}
-  \item macOSBigSur version 11.2.3
+  \item macOS BigSur version 11.2.3
   \item Python 3.10.8
 \end{itemize}
 
@@ -25,7 +25,7 @@ Bot 「お疲れ様」\\
 \subsection{Botの作成・管理をする}
 初めに、機能などはまだついていないBotをDiscordのポータルサイトから作成します。
 DiscordのBotの作り方(メモ)という記事の「1.Discord上のBotの作成」を見ながらBotを作成してみて下さい。
-\footnote{DiscordのBotの作り方(メモ)https://note.com/exteoi/n/nf1c37cb26c41 (参照2023.3.29)}。
+\footnote{DiscordのBotの作り方(メモ)\url{https://note.com/exteoi/n/nf1c37cb26c41 (参照2023.3.29)}}
 同記事内の「2.Glitchでサーバーを作成」の部分は、今回Glitchは使用しないため行う必要はありません。
 
 \subsection{ファイルの作成}
@@ -40,7 +40,7 @@ touch main.py
 
 \subsection{discord.pyの準備}
 ここからはdiscord.pyのドキュメントを見ながら環境構築をしていきます。
-\footnote{discord.pyドキュメントhttps://discordpy.readthedocs.io/ja/latest/intro.html#basic-concepts (参照2023.3.29)}
+\footnote{discord.pyドキュメント\url{https://discordpy.readthedocs.io/ja/latest/intro.html#basic-concepts (参照2023.3.29)}}
 PythonでDiscordのAPIを操作するために必要なライブラリをインストールします。先ほど作成したディレクトリにアクセスして、以下のコマンドで discord.py をインストールします。
 \begin{shaded}
 \begin{verbatim}
@@ -90,7 +90,7 @@ pip install python-dotenv
 \end{verbatim}
 \end{shaded}
 インストール後にmain.pyに下記のコードを付け加えて下さい。\\
-main.pyのimport discordとclass MyClientの間に以下のコードを追加して下さい。
+main.pyのimport discordとclass MyClientの間に以下のコードを追加します。
 \begin{tcolorbox}[breakable]
 \begin{verbatim}
 1 import os
@@ -104,13 +104,11 @@ main.pyのimport discordとclass MyClientの間に以下のコードを追加し
 1 client.run(os.environ['DISCORD_TOKEN'])
 \end{verbatim}
 \end{tcolorbox}
-
 書き換えたあとに python3 main.py を実行すると，先ほどと同じようにメッセージの受け取りをしてくれるサーバーサイドアプリケーションが立ち上がります。
 
 \subsection{Botが特定のワードに反応して、特定のメッセージを返答する機能をつける}
-プログラムを起動して正常にサーバーサイドアプリケーションがメッセージを受け取れるようになったら、Botが特定のワードに反応して、特定のメッセージを返答する機能をつけていきます。\\
-Botに機能をつけるには上記のソースコードの8行目と10行目の間にコードを付け足していきます。\\
-上記のソースコードの8行目と10行目の間に下記のコードを付け足すことで、Botは特定のワードに反応して、特定のメッセージを返答するようになります。
+プログラムを起動して正常にサーバーサイドアプリケーションがメッセージを受け取れるようになったら、Botが特定のワードに反応して、特定のメッセージを返答する機能をつけていきます。
+Botに機能をつけるには上記のソースコードの8行目と10行目の間に以下のコードを付け足していきます。\\
 \begin{tcolorbox}[breakable]
 \begin{verbatim}
 1 # メッセージを書いた人がBotなら処理終了
@@ -124,5 +122,6 @@ Botに機能をつけるには上記のソースコードの8行目と10行目�
 付け足したコードの解説をしていきます。\\
 2,3行目でメッセージを書いた人がBotなら処理を終了させています。\\
 4行目でメッセージが投稿されたチャンネル取得しています。\\
-5行目のmessage.contentはメッセージの内容で、今回の場合「仕事終わった」というメッセージをチャンネルに投稿すると、メッセージが投稿されたチャンネルにBotが「お疲れ様」と返答します。\\
-「仕事終わった」や「お疲れ様」に当たる部分は各自で好きな言葉に設定して楽しんで下さい。
+5行目のmessage.contentはメッセージの内容で、今回の場合「仕事終わった」というメッセージをチャンネルに投稿すると、メッセージが投稿されたチャンネルにBotが「お疲れ様」と返答します。
+\section{まとめ}
+今回はDiscordのBotの作り方を説明しました。上記の「仕事終わった」や「お疲れ様」に当たる部分を変えたりして自分好みに改良してみて下さい。
