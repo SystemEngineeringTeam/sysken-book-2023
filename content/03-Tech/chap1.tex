@@ -2,18 +2,17 @@
 
 \section{DiscordBotを作ってみよう}
 \subsection{はじめに}
-はじめまして、sudaです。私はDiscordで人とチャットをしている時に同じ会話が頻繁に続き、これBotで返事を返すようにしたら返事を返す手間が省けるし面白いのでは？と思いBotを作ることにしました。
+はじめまして、sudaです。私はDiscordで人とチャットをしている時に同じ会話が頻繁に続き、これBotで返事をするようにしたら返事をする手間が省けるし面白いのでは？と思いBotを作ることにしました。
 発想がひどいって！？まあでも自分の発想したものを形にすることが面白いことだと思うので今回はそこには目を瞑りましょう…
 もちろん自分が送ったメッセージに対してBotに返答させることもできるので、自分だけのオリジナルDiscordBotを作ってみましょう！
 
 \subsection{何を作るのか}
 Discordのサーバで特定のメッセージが来たら、特定のメッセージを返すDiscordのBotを作ります。
 サンプルプログラムを参照したい方は以下のURLからご覧下さい。
-\footnote{今回作るDiscordBotのサンプルプログラム\url{https://github.com/sudamichiyo/Discord_Bot_sampleprogram.git}}
+\footnote{今回作るDiscordBotのサンプルプログラム\url{https://github.com/sudamichiyo/Discord_Bot_sampleprogram}}
 例えば自分が「仕事終わった」と言うとBotが「お疲れ様」と返してくれます。
 \section{実行環境・使用技術}
 \begin{itemize}
-  \item macOS BigSur version 11.2.3
   \item Python 3.10.8
 \end{itemize}
 
@@ -25,7 +24,6 @@ Discordのサーバで特定のメッセージが来たら、特定のメッセ�
 初めに、機能などはまだついていないBotをDiscordのポータルサイトから作成します。
 DiscordのBotの作り方(メモ)という記事の「1.Discord上のBotの作成」を見ながらBotを作成してみて下さい。
 \footnote{DiscordのBotの作り方(メモ)\url{https://note.com/exteoi/n/nf1c37cb26c41 (参照2023.3.29)}}
-同記事内の「2.Glitchでサーバーを作成」の部分は、今回Glitchは使用しないため行う必要はありません。
 
 \subsection{ファイルの作成}
 Botを実行するPythonファイルを作ります。
@@ -43,7 +41,7 @@ touch main.py
 PythonでDiscordのAPIを操作するために必要なライブラリをインストールします。先ほど作成したディレクトリにアクセスして、以下のコマンドで discord.py をインストールします。
 \begin{shaded}
 \begin{verbatim}
-python3 -m pip install -U discord.py
+python -m pip install -U discord.py
 \end{verbatim}
 \end{shaded}
 次に、先ほど作成したmain.pyを以下のソースコードに書き換えます。
