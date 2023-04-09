@@ -1,51 +1,32 @@
-\chapter{ハッカソン開始時に設定しておきたい事柄}
-\section{ハッカソン開始時に設定しておきたい事柄}
+\chapter{リポジトリ作ったら設定しておきたい事柄}
+\section{はじめに}
 こんにちは。hihumikanです。
 
-どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。
+本チャプターでは「リポジトリ作ったら設定しておきたい事柄」をご紹介致します。2年間ハッカソン芸人としてやっていた私として、「またハッカソン参加するなら私ならこうするだろう」といった設定をまとめていきます。
 
-\begin{tcolorbox}[breakable]
-\begin{verbatim}
-1  /* ここにはソースコードを書く */
-2  #include<stdio.h>
-3
-4  int main(void)
-5  {
-6    printf("Hello, World!\n");
-7    return 0;
-8  }
-9  /* breakableを付けるとこんな感じで改行にも対応できる */
-\end{verbatim}
-\end{tcolorbox}
+\section{全体的な設定}
 
-\begin{shaded}
-\begin{verbatim}
-## ここにはコマンドを書く
-$ echo "Hello, World!"
-\end{verbatim}
-\end{shaded}
+\subsection{.gitignore}
+\subsection{.gitattributes}
+\subsection{.vscode}
+\subsection{README.md}
+\subsection{pre-commit(git hooks)}
+\subsection{LICENCE}
 
-図表はキャプションを付けたときに、先頭に「▲」や「▼」を付けるようにした。
+\section{インフラ回り}
 
-\begin{table}[H]
-  \centering
-  \caption{表のサンプル}
-  \begin{tabular}{|c|l|l|l|} \hline
-    日本 & hoge & fuga & piyo \\ \hline
-    アメリカ & foo & bar & baz \\ \hline
-  \end{tabular}
-  \label{table-sample10302}
-\end{table}
+\subsection{CI/CD}
+\subsection{Makefile}
+\subsection{docker}
+\subsection{renovate}
+\subsection{dbdoc}
+\subsection{OpenAPI}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=4cm]{./image/03-Tech/chap2/sample.png}
-  \caption{画像のサンプル}
-  \label{figure-sample10302}
-\end{figure}
+\section{バージョン管理}
 
-\begin{tcolorbox}[title=これはコラム]
-  コラムも随時挟めるようにした。
+\subsection{direnv}
+\subsection{asdf}
+\subsection{node}
+\subsection{poetry}
 
-  tcolorboxはtitleを指定するといい感じにタイトル付きの枠で囲ってくれる。
-\end{tcolorbox}
+\section{おわりに}
