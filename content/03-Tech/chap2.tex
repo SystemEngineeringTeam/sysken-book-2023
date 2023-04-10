@@ -3,14 +3,20 @@
 こんにちは。hihumikanです。
 
 本チャプターでは「リポジトリ作成後に設定しておきたいこと」をご紹介します。
-私自身が次回ハッカソンに参加する際に、こういった設定をするだろうというものをまとめました。
+私自身が次回プロジェクト開始する際に、こういった設定をするだろうというものをまとめました。
 
 ただし、これら全ての内容をプロジェクトに適用出来るものではないため、ご利用の環境や用途に合わせて利用していただければと思います。
 
+\subsection{対象読者}
+
+対象読者は、Git/GitHubを利用した開発を行う初学者の方を想定しています。
+
 \section{ファイルの設定}
+
 リポジトリ作成後に設定しておきたい「ファイルの設定」についてご紹介します。
 
 \subsection{.gitignore}
+
 .gitignoreは、Gitによる管理から除外したいファイルやディレクトリを指定するための設定ファイルです。
 
 例えば、MacOSの場合、ディレクトリ毎に.DS\_Storeというファイルが自動的に生成されます。
@@ -30,30 +36,26 @@
 リポジトリを共有する場合、.gitignoreファイルを共有することで、開発メンバー全員が同じ設定を利用できるため、必要なファイルだけがGitの管理下に置かれるようになります。
 
 \subsection{.gitattributes}
+
 .gitattributesは、特定のファイルに対してGitの挙動を変更するための設定ファイルです。
 主に、改行コードやファイルの文字コードを指定することが多いです。改行コードの指定は、Windows(CRLF)とLinux(LF)の違いを吸収するために行います。
 
 
 \subsection{Makefile}
-\subsection{pre-commit}
 
 
 \section{インフラ回り}
 
-\subsection{CI/CD}
-\subsection{docker}
+\subsection{GitHub Actions}
 \subsection{renovate}
-\subsection{dbdoc}
-\subsection{OpenAPI}
-
-\section{バージョン管理}
-
-\subsection{asdf}
-\subsection{node}
-\subsection{poetry}
-
-\section{その他}
 \subsection{webhooks}
-\subsection{deploykeys}
+
 
 \section{おわりに}
+本チャプターでは「リポジトリ作成後に設定しておきたいこと」をご紹介しました。
+
+\section{参考文献}
+\begin{itemize}
+  \item \href{https://git-scm.com/docs/gitignore}{gitignore}
+  \item \href{https://git-scm.com/docs/gitattributes}{gitattributes}
+\end{itemize}
