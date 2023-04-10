@@ -38,10 +38,30 @@
 \subsection{.gitattributes}
 
 .gitattributesは、特定のファイルに対してGitの挙動を変更するための設定ファイルです。
-主に、改行コードやファイルの文字コードを指定することが多いです。改行コードの指定は、Windows(CRLF)とLinux(LF)の違いを吸収するために行います。
+主に、改行コードやファイルの文字コードを指定するために利用されます。
+
+改行コードを指定する理由としては、WindowsとMacOSでは改行コードが異なることが挙げられます。
+Gitで管理されているファイルの改行コードが一致しないと、差分が発生してしまい、想定した挙動と異なる動作をすることがあります。
+それを防ぐために、.gitattributesに改行コードを明示しておくことで、安全に開発を進めることができます。
+
+リスト1.2のように、ファイルの拡張子に対して、改行コードを指定することができます。
+
+\begin{tcolorbox}[title=リスト1.2 .gitattributes]
+  \begin{verbatim}
+1 * text=auto
+2 *.sh text eol=lf
+\end{verbatim}
+\end{tcolorbox}
+
+これも.gitignoreと同様に.gitattributes共有することで、開発メンバー全員が同じ設定を利用することができます。
 
 
 \subsection{Makefile}
+
+Makefileは、コマンドをまとめて実行するための設定ファイルです。
+例えば、開発環境の構築や、テストの実行などをまとめて実行することができます。
+
+
 
 
 \section{インフラ回り}
