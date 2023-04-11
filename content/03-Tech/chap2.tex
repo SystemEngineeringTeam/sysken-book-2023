@@ -3,7 +3,7 @@
 こんにちは。hihumikanです。
 
 本チャプターでは「リポジトリ作成後に設定しておきたいこと」をご紹介します。
-私自身が次回プロジェクト開始する際に、こういった設定をするだろうというものをまとめました。
+私自身が次回プロジェクト開始する際に、こういった設定や技術を使うだろうというものをまとめました。
 
 ただし、これら全ての内容をプロジェクトに適用出来るものではないため、ご利用の環境や用途に合わせて利用していただければと思います。
 
@@ -59,23 +59,108 @@ Gitで管理されているファイルの改行コードが一致しないと�
 \subsection{Makefile}
 
 Makefileは、コマンドをまとめて実行するための設定ファイルです。
-例えば、開発環境の構築や、テストの実行などをまとめて実行することができます。
 
+利点として、開発メンバー全員が同じコマンドを実行することができることが挙げられます。
+環境構築やテストの実行など、手順が複雑な作業を一人一人が実行した場合、手順の違いによるエラーが発生する可能性があります。
+それらを防ぐために、Makefileにまとめておくことで、開発メンバー全員が同じコマンドを実行することができ、人的ミスを防ぐことができます。
 
+Makefileの例としては、リスト1.3のようなものです。
 
+\begin{tcolorbox}[title=リスト1.3 Makefile]
+  \begin{verbatim}
+1 up: ## APIとデータベースを起動
+2   docker compose -f docker-compose-db.yml -p db up -d
+3   docker compose -f docker-compose-api.yml -p api up -d
+4 
+5 build: ## サービスの構築
+6   docker compose -f docker-compose-db.yml -p db build
+7   docker compose -f docker-compose-api.yml -p api build
+8 
+9 stop: ## サービスを停止
+10   docker compose -f docker-compose-db.yml -p db stop
+11   docker compose -f docker-compose-api.yml -p api stop
+12 
+13 kill: ## サービスを強制停止
+14   docker compose -f docker-compose-db.yml -p db kill
+15   docker compose -f docker-compose-api.yml -p api kill
+16 
+17 down: ## サービスの停止とコンテナの削除
+18   docker compose -f docker-compose-db.yml -p db down
+19   docker compose -f docker-compose-api.yml -p api down
+20 
+21 restart: ## サービスの再起動
+22   docker compose -f docker-compose-db.yml -p db restart
+23   docker compose -f docker-compose-api.yml -p api restart
+ \end{verbatim}
+\end{tcolorbox}
+
+これらを実行する場合、シェルに
+\begin{shaded}
+  \begin{verbatim}
+$ make up
+\end{verbatim}
+\end{shaded}
+と入力することで、2,3行目のコマンドが実行されます。
+リスト1.3の例は簡単なものですが、他にもMakefile内に変数を定義することが出来るため、変更が必要な箇所を変数に置き換えることで、コマンドの変更を容易に行うことができます。
 
 \section{インフラ回り}
 
 \subsection{GitHub Actions}
-\subsection{renovate}
-\subsection{webhooks}
+Github Actionsは、GitHub上で動作するCI/CDツールです。
+簡単に言えば、仮想マシン上でコマンドを実行することができるものです。
 
+用途としては、コードの静的解析やテストの実行、デプロイなどが挙げられます。
+その他にも、Pull Requestに対して、テスト内容をコメントすることができる等のGitHub上での機能を利用することができます。
+
+利用方法としては、リスト1.4のように、.github/workflowsディレクトリを作成し、その中に設定ファイルを作成します。
+
+\begin{tcolorbox}[title=リスト1.4 .github/workflows/pr.yml]
+  \begin{verbatim}
+1 on:
+2   pull_request:
+3     types: [opened]
+4 name: Pull Request
+5 jobs:
+6   assignAuthor:
+7     name: Assign author to PR
+8     runs-on: ubuntu-latest
+9     steps:
+10      - name: Assign author to PR
+11        uses: technote-space/assign-author@v1
+\end{verbatim}
+\end{tcolorbox}
+
+上記の例では、Pull Requestが作成された際に、Pull Requestの作成者をAssigneeに設定する設定ファイルの例です。
+
+その他にも、リスト1.5のように、ssh鍵を設定することで、リモートサーバーにアクセスすることができます。
+\begin{tcolorbox}[title=リスト1.5 .github/workflows/deploy.yml]
+  \begin{verbatim}
+1 name:CI
+2 on:
+3   push:
+4     branches:
+5       - main
+6 jobs:
+7   deploy:
+8     runs-on: ubuntu-latest
+9     steps:
+10      - uses: actions/checkout@v2
+11      - name: Install SSH Key for Deploy
+12        uses: appleboy/ssh-action@master
+13        with:
+14          key: ${{ secrets.SK }}
+15          host: ${{secrets.SSH_HOST}}
+16          username: ${{secrets.SSH_USERNAME}}
+17          port: ${{secrets.SSH_PORT}}
+18          script: |
+21            git pull
+\end{verbatim}
+\end{tcolorbox}
+
+この他にも、コードを自動で整形してcommitしてくれるツールなどの様々なツールが存在します。
+調べてみると面白いかもしれません。
 
 \section{おわりに}
 本チャプターでは「リポジトリ作成後に設定しておきたいこと」をご紹介しました。
-
-\section{参考文献}
-\begin{itemize}
-  \item \href{https://git-scm.com/docs/gitignore}{gitignore}
-  \item \href{https://git-scm.com/docs/gitattributes}{gitattributes}
-\end{itemize}
+ご紹介したのは一部分ですが、これらを設定しておくことで、開発の効率化や、開発メンバーのミスを防ぐことができます。
+ぜひ、設定してみてください。
