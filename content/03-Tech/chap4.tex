@@ -40,7 +40,7 @@
 
 
 
-\chapter{Next.js 13}
+\chapter{Next.js 13 触ってみた}
 \section{はじめに}
 10 月後半に行われた Next.js Conf 2022 で発表された Next.js 13 を実際に触って
 みたのでその内容を書きます。当初は全体を網羅して書く予定だったのですが量が多
@@ -267,6 +267,7 @@ app/dashboard/layout.tsx
 
 
 
+
 \section{React Server Components}
 React Server Components(RSC)はReact18で追加された機能でクライアントと
 サーバ側が協調してアプリケーションをレンダリングできる機能です。
@@ -353,13 +354,22 @@ dashboard/page.tsxを書き換えます。
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=12cm]{./image/03-Tech/chap4/05.png}
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/06.png}
 \end{figure}
 
 
 サイトにカーソルを合わせて右クリックしてページのソースを表示をクリックしてみましょう。
 あらかじめデータが入った状態でサーバから送られてくるのでページソースに記事データが表示されています。
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/05.png}
+\end{figure}
+
+\section{ローディングUI表示}
+
+次はローディングUIを表示する機能です
+dashboradディレクトリにloading.tsxを作成します
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   export default function Loading() {
@@ -372,7 +382,7 @@ dashboard/page.tsxを書き換えます。
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=12cm]{./image/03-Tech/chap4/06.png}
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/07.png}
 \end{figure}
 
 
