@@ -1,3 +1,45 @@
+
+\lstdefinelanguage{JavaScript}{
+  keywords={const, let, var, export, default, function, return, if, else, while, for, switch, case, break, throw, catch, typeof, instanceof, import},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+}
+
+\lstdefinelanguage{TypeScript}{
+  keywords={const, let, var, export, default, function, return, if, else, while, for, switch, case, break, throw, catch, typeof, instanceof, import, as, type, keyof, typeof, this},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, interface, enum, extends, implements, readonly, abstract, static, public, private, protected, any, boolean, number, string, object, unknown, null, void, never},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+}
+
+\lstdefinestyle{customstyle}{
+  language=TypeScript,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+}
+
+
+
 \chapter{Next.js 13}
 \section{はじめに}
 10 月後半に行われた Next.js Conf 2022 で発表された Next.js 13 を実際に触って
@@ -9,69 +51,54 @@
 \section{プロジェクト作成からサーバ起動}
 
 TypeScriptとESLintを入れるか聞かれるので入れる
-\begin{shaded}
-  \begin{verbatim}
+\begin{tcblisting}{listing only, breakable}
   npx create-next-app@latest --ts
-\end{verbatim}
-\end{shaded}
+\end{tcblisting}
 
 
 
 pagesディレクトリを削除
-\begin{shaded}
-  \begin{verbatim}
-    rm -rf pages
-  \end{verbatim}
-\end{shaded}
+\begin{tcblisting}{listing only, breakable}
+  rm -rf pages
+\end{tcblisting}
 
 appディレクトリを作る
-\begin{shaded}
-  \begin{verbatim}
-    mkdir app
-  \end{verbatim}
-\end{shaded}
+\begin{tcblisting}{listing only, breakable}
+  mkdir app
+\end{tcblisting}
 
 
 appディレクトリは実験段階の機能なので、next.config.jsを変更する
 
-
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    const nextConfig = {
-      reactStrictMode: true,
-      swcMinify: true,
-      experimental: {
-        appDir: true,
-      },
-    };
-  \end{verbatim}
-\end{tcolorbox}
-
-
+\begin{tcblisting}{listing only, breakable}
+  const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  experimental: {
+  appDir: true,
+  },
+  };
+\end{tcblisting}
 
 app/page.tsxを作り、以下のようにする
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    tsx:app/page.tsx
-    export default function Page() {
+
+
+\begin{tcblisting}{listing only, breakable}
+  export default function Page() {
       return <h1>Hello, Next.js!</h1>;
     }
-    
-  \end{verbatim}
-\end{tcolorbox}
+\end{tcblisting}
 
 
 
 
 ローカルサーバ起動
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-      npm run dev
 
-    \end{verbatim}
-\end{tcolorbox}
+\begin{tcblisting}{listing only, breakable}
+  npm run dev
+\end{tcblisting}
 
 
 
@@ -87,55 +114,48 @@ app/page.tsxを作り、以下のようにする
 
 next/headを使って各ページファイルにheadを定義していたのがhead.tsxに書けるようになったみたいですね
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    export default function Head() {
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  export default function Head() {
       return (
-        <>
-          <title></title>
-          <meta content="width=device-width, initial-scale=1" name="viewport" />
-          <link rel="icon" href="/favicon.ico" />
-        </>
+      <>
+      <title></title>
+      <meta content="width=device-width, initial-scale=1" name="viewport" />
+      <link rel="icon" href="/favicon.ico" />
+      </>
       )
     }
-    
-      \end{verbatim}
-\end{tcolorbox}
+\end{tcblisting}
 
 
 
 ページの共通レイアウトを定義するファイル
 
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    export default function RootLayout({
+
+
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  export default function RootLayout({
       children,
     }: {
-      children: React.ReactNode
-    }) {
+  children: React.ReactNode
+  }) {
       return (
-        <html>
-          <head />
-          <body>{children}</body>
-        </html>
+      <html>
+        <head />
+        <body>{children}</body>
+      </html>
       )
     }
-    
-      
-        \end{verbatim}
-\end{tcolorbox}
+
+\end{tcblisting}
 
 
 今までは\_app.tsxなどに下記のようにレイアウトを定義していました
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  \end{verbatim}
-\end{tcolorbox}
-
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  <Layout>
+  <Component {...pageProps} />
+  </Layout>
+\end{tcblisting}
 
 
 
@@ -147,21 +167,17 @@ next/headを使って各ページファイルにheadを定義していたのがh
 appディレクトリの中でdashbordディレクトリを作成して以下のようにlayout.tsxを配置するだけです。
 
 
-
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-
-    export default function DashboardLayout({
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  export default function DashboardLayout({
       children,
     }: {
-      children: React.ReactNode;
-    }) {
+  children: React.ReactNode;
+  }) {
       return <section>{children}</section>;
     }
-    
+\end{tcblisting}
 
-  \end{verbatim}
-\end{tcolorbox}
+
 
 
 少し疑問に思ったのがdashboardディレクトリのpage.tsxではRootLayoutは呼ばれずDashboardLayoutのみが呼ばれるのかと思っていました。しかしそんなことはなく入れ子構造で呼び出されるようです。
@@ -169,77 +185,60 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 公式の画像がわかりやすいので貼っておきます。
 次の機能に行く前にdashboardディレクトリにpage.tsxも作っておきます
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-
-
-    export default function DashBoardPage() {
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  export default function DashBoardPage() {
       return <h1>DashBoard Page</h1>;
     }
-    
-  
-  
-    \end{verbatim}
-\end{tcolorbox}
+
+\end{tcblisting}
 
 
-
-
-違いがわかりやすいように他のファイルも変更します
-
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    
-    export default function RootLayout({
+違いがわかりやすいように他のファイルも変更します\\
+app/layout.tsx
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  export default function RootLayout({
       children,
     }: {
-      children: React.ReactNode;
-    }) {
-      return (
-        <html>
-          <head />
-          <body
-            style={{
-              backgroundColor: '#C0C0C0',
-              padding: '50px',
-            }}
-          >
-            {children}
-          </body>
-        </html>
-      );
-    }
-    
-    
-    
-      \end{verbatim}
-\end{tcolorbox}
-
-
-
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-
-
-          export default function DashboardLayout({
-  children,
-}: {
   children: React.ReactNode;
-}) {
+  }) {
   return (
-    <section
-      style={{
-        backgroundColor: 'white',            
-      }}
-    >
-      {children}
-    </section>
+  <html>
+  <head />
+  <body
+  style={{
+      backgroundColor: '#C0C0C0',
+      padding: '50px',
+    }}
+  >
+    {children}
+  </body>
+  </html>
   );
-}
-      
-      
-        \end{verbatim}
-\end{tcolorbox}
+  }
+
+\end{tcblisting}
+
+
+
+
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  export default function DashboardLayout({
+      children,
+    }: {
+  children: React.ReactNode;
+  }) {
+  return (
+  <section
+  style={{
+      backgroundColor: 'white',
+    }}
+  >
+    {children}
+  </section>
+  );
+  }
+\end{tcblisting}
+
 
 
 ページの見た目が画像のようになってればOK
@@ -277,61 +276,57 @@ dashboard/page.tsxを書き換えます。
 
 
 
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  type Article = {
+  id: number;
+  title: string;
+  };
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
+  async function getArticle(): Promise<Article[]> {
+  const res = await fetch('https://qiita.com/api/v2/items?page=1&per_page=24');
 
-
-    type Article = {
-      id: number;
-      title: string;
-    };
-    
-    async function getArticle(): Promise<Article[]> {
-      const res = await fetch('https://qiita.com/api/v2/items?page=1&per_page=24');
-    
-      if (!res.ok) {
-        throw new Error('Failed to fetch data');
-      }
-    
-      return res.json();
+  if (!res.ok) {
+      throw new Error('Failed to fetch data');
     }
-    
-    export default async function DashBoardPage() {
-      const articles = await getArticle();
-    
-      return (
-        <div>
-          <h1>Dashboard</h1>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flexWrap: 'wrap',
-              height: '50vh',
-            }}
-          >
-            {articles?.map((article) => (
-              <div
-                key={article.id}
-                style={{
-                  display: 'flex',
-                  gap: '10px',
-                }}
-              >
-                <p>{article.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-    
-    
-      
-      
-        \end{verbatim}
-\end{tcolorbox}
+
+  return res.json();
+  }
+
+  export default async function DashBoardPage() {
+  const articles = await getArticle();
+
+  return (
+  <div>
+  <h1>Dashboard</h1>
+  <div
+  style={{
+      display: 'flex',
+      flexDirection: 'column',
+      flexWrap: 'wrap',
+      height: '50vh',
+    }}
+  >
+  {articles?.map((article) => (
+  <div
+  key={article.id}
+  style={{
+      display: 'flex',
+      gap: '10px',
+    }}
+  >
+    <p>{article.title}</p>
+  </div>
+  ))}
+  </div>
+  </div>
+  );
+  }
+
+
+\end{tcblisting}
+
+
+
 
 
 
@@ -344,17 +339,11 @@ dashboard/page.tsxを書き換えます。
 あらかじめデータが入った状態でサーバから送られてくるのでページソースに記事データが表示されています。
 
 
-
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-
-
-    export default function Loading() {
+\begin{tcblisting}{listing only, breakable}
+  export default function Loading() {
       return <p>Loading...</p>;
     }
-    
-  \end{verbatim}
-\end{tcolorbox}
+\end{tcblisting}
 
 
 データの取得が終わりpageコンポーネントがレンダリングされるまでの間はLoadingコンポーネントが表示されます
@@ -368,89 +357,92 @@ Suspenseについて説明するとコンポーネントが表示されるまで
 具体的な使用例を上げます。下のコードはデータフェッチライブラリ React Queryを使ったデータ取得と表示のサンプルです。
 
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
-const queryClient = new QueryClient();
 
-export default function App() {
+
+
+\begin{tcblisting}{listing options={style=customstyle}, listing only, breakable}
+  import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+
+  const queryClient = new QueryClient();
+
+  export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Example />
-    </QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+  <Example />
+  </QueryClientProvider>
   );
-}
-export function Loading() {
-  return <p>Loading...</p>;
-}
+  }
+  export function Loading() {
+      return <p>Loading...</p>;
+    }
 
-function Example() {
-  const { isLoading, data } = useQuery('repoData', () =>
-    fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
+  function Example() {
+      const { isLoading, data } = useQuery('repoData', () =>
+      fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
       (res) => res.json()
-    )
-  );
+      )
+      );
 
-  if (isLoading) return <Loading />;
+      if (isLoading) return <Loading />;
 
-  return (
-    <div>
-      <h1>{data.name}</h1>
-      <p>{data.description}</p>
-    </div>
-  );
-}
+      return (
+      <div>
+        <h1>{data.name}</h1>
+        <p>{data.description}</p>
+      </div>
+      );
+    }
+\end{tcblisting}
 
-  \end{verbatim}
-\end{tcolorbox}
+
 
 
 Suspenseを使えば下のコードに置き換えることができます
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
+
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  import { Suspense } from 'react';
+  import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+
+  const queryClient = new QueryClient();
+
+  export default function App() {
+  return (
+  <QueryClientProvider client={queryClient}>
+    {/* suspenseコンポーネントででラップ */}
 
 
-    import { Suspense } from 'react';
-    import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-    
-    const queryClient = new QueryClient();
-    
-    export default function App() {
-      return (
-        <QueryClientProvider client={queryClient}>
-          {/* suspenseコンポーネントででラップ */}
-          <Suspense fallback={<Loading />}>
-            <Example />
-          </Suspense>
-        </QueryClientProvider>
-      );
-    }
-    export function Loading() {
+
+
+  <Suspense fallback={<Loading />}>
+  <Example />
+  </Suspense>
+  </QueryClientProvider>
+  );
+  }
+  export function Loading() {
       return <p>Loading...</p>;
     }
-    
-    function Example() {
+
+  function Example() {
       const { data } = useQuery('repoData', () =>
-        fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
-          (res) => res.json()
-        )
+      fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
+      (res) => res.json()
+      )
       );
       //ローディングプロパティによる表示分岐の削除
-    
+
       return (
-        <div>
-          <h1>{data.name}</h1>
-          <p>{data.description}</p>
-        </div>
+      <div>
+        <h1>{data.name}</h1>
+        <p>{data.description}</p>
+      </div>
       );
     }
-    
-    
-  \end{verbatim}
-\end{tcolorbox}
+\end{tcblisting}
+
+
 
 
 
@@ -459,18 +451,19 @@ Suspenseを使えば下のコードに置き換えることができます
 Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み取りPageコンポーネントをSuspenseコンポーネントでラップしてくれるようです。
 普通に書くと以下のようになります。
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    <Layout>
-    <Headr/>
-    <SideNav/>
-    <Suspense fallback={<Loading />}>
-      <DashBoardPage />
-    </Suspense>
+
+
+\begin{tcblisting}{listing only, breakable}
+  <Layout>
+  <Headr/>
+  <SideNav/>
+  <Suspense fallback={<Loading />}>
+  <DashBoardPage />
+  </Suspense>
   </Layout>
-    
-  \end{verbatim}
-\end{tcolorbox}
+\end{tcblisting}
+
+
 ディレクトリ内にloading.tsxを置いておけば自動的にこのコードを書いた動きになるということですね。
 
 
@@ -480,36 +473,31 @@ Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み�
 dashboardディレクトリにerror.tsxを作成します。
 
 
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+  'use client';
 
+  import { useEffect } from 'react';
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    'use client';
-
-import { useEffect } from 'react';
-
-export default function Error({
-  error,
-  reset,
-}: {
+  export default function Error({
+      error,
+      reset,
+    }: {
   error: Error;
   reset: () => void;
-}) {
+  }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
+  // Log the error to an error reporting service
+  console.error(error);
   }, [error]);
 
   return (
-    <div>
-      <p>Something went wrong!</p>
-      <button onClick={() => reset()}>Reset error boundary</button>
-    </div>
+  <div>
+  <p>Something went wrong!</p>
+  <button onClick={() => reset()}>Reset error boundary</button>
+  </div>
   );
-}
-    
-  \end{verbatim}
-\end{tcolorbox}
+  }
+\end{tcblisting}
 
 
 
@@ -540,55 +528,50 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 存在しないURL'hoge'を指定しgetArticelでしていたエラーハンドリングを削除しています。
 
 
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
 
-    
-type Article = {
+  type Article = {
   id: number;
   title: string;
-};
+  };
 
-async function getArticle(): Promise<Article[]> {
-  const res = await fetch('hoge');
+  async function getArticle(): Promise<Article[]> {
+      const res = await fetch('hoge');
 
-  return res.json();
-}
+      return res.json();
+    }
 
-export default async function DashBoardPage() {
+  export default async function DashBoardPage() {
   const articles = await getArticle();
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'wrap',
-          height: '50vh',
-        }}
-      >
-        {articles?.map((article) => (
-          <div
-            key={article.id}
-            style={{
-              display: 'flex',
-              gap: '10px',
-            }}
-          >
-            <p>{article.title}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div>
+  <h1>Dashboard</h1>
+  <div
+  style={{
+      display: 'flex',
+      flexDirection: 'column',
+      flexWrap: 'wrap',
+      height: '50vh',
+    }}
+  >
+  {articles?.map((article) => (
+  <div
+  key={article.id}
+  style={{
+      display: 'flex',
+      gap: '10px',
+    }}
+  >
+    <p>{article.title}</p>
+  </div>
+  ))}
+  </div>
+  </div>
   );
-}
+  }
 
-
-
-  \end{verbatim}
-\end{tcolorbox}
+\end{tcblisting}
 
 
 エラーの内容とエラーページが表示されていますね
