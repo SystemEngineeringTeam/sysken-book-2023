@@ -104,6 +104,11 @@ app/page.tsxを作り、以下のようにする
 
 ブラウザで http://localhost:3000/ にアクセスすると、Hello, Next.js! が表示される
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/01.png}
+\end{figure}
+
 
 
 
@@ -184,6 +189,11 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 
 公式の画像がわかりやすいので貼っておきます。
 次の機能に行く前にdashboardディレクトリにpage.tsxも作っておきます
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/02.png}
+\end{figure}
+
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   export default function DashBoardPage() {
@@ -220,7 +230,7 @@ app/layout.tsx
 
 
 
-
+app/dashboard/layout.tsx
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   export default function DashboardLayout({
       children,
@@ -244,6 +254,12 @@ app/layout.tsx
 ページの見た目が画像のようになってればOK
 
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/03.png}
+\end{figure}
+
+
 
 
 
@@ -259,7 +275,10 @@ React Server Components(RSC)はReact18で追加された機能でクライアン
 レンダリングするといったことができます。これも公式ドキュメントの図がわかりやすいので貼っておきます。
 
 
-画像のサンプル
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/04.png}
+\end{figure}
 
 
 
@@ -332,14 +351,17 @@ dashboard/page.tsxを書き換えます。
 
 画像のように表示される
 
-画像2
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/05.png}
+\end{figure}
 
 
 サイトにカーソルを合わせて右クリックしてページのソースを表示をクリックしてみましょう。
 あらかじめデータが入った状態でサーバから送られてくるのでページソースに記事データが表示されています。
 
 
-\begin{tcblisting}{listing only, breakable}
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   export default function Loading() {
       return <p>Loading...</p>;
     }
@@ -347,6 +369,11 @@ dashboard/page.tsxを書き換えます。
 
 
 データの取得が終わりpageコンポーネントがレンダリングされるまでの間はLoadingコンポーネントが表示されます
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/06.png}
+\end{figure}
 
 
 
@@ -410,11 +437,6 @@ Suspenseを使えば下のコードに置き換えることができます
   export default function App() {
   return (
   <QueryClientProvider client={queryClient}>
-    {/* suspenseコンポーネントででラップ */}
-
-
-
-
   <Suspense fallback={<Loading />}>
   <Example />
   </Suspense>
@@ -517,7 +539,6 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
       <DashBoardPage />
     </ErrorBoundary>
   </Layout>
-    
   \end{verbatim}
 \end{tcolorbox}
 
@@ -577,7 +598,10 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 エラーの内容とエラーページが表示されていますね
 
 
-画像3
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap4/08.png}
+\end{figure}
 
 
 
