@@ -43,14 +43,14 @@
 \chapter{Next.js 13 触ってみた}
 \section{はじめに}
 10 月後半に行われた Next.js Conf 2022 で発表された Next.js 13 を実際に触って
-みたのでその内容を書きます。当初は全体を網羅して書く予定だったのですが量が多
-かったの少し絞ってます。対象読者としてある程度 React や Next.js を触っている
-人を対象としています
+みたのでその内容を書きます.当初は全体を網羅して書く予定だったのですが量が多
+かったの少し絞ってます.対象読者としてある程度 React や Next.js を触っている
+人を対象としています.
 
 
 \section{プロジェクト作成からサーバ起動}
 
-TypeScriptとESLintを入れるか聞かれるので入れる
+TypeScriptとESLintを入れるか聞かれるので入れる.
 \begin{tcblisting}{listing only, breakable}
   npx create-next-app@latest --ts
 \end{tcblisting}
@@ -68,9 +68,9 @@ appディレクトリを作る
 \end{tcblisting}
 
 
-appディレクトリは実験段階の機能なので、next.config.jsを変更する
+appディレクトリは実験段階の機能なので,next.config.jsを変更する.
 
-\begin{tcblisting}{listing only, breakable}
+\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -80,7 +80,7 @@ appディレクトリは実験段階の機能なので、next.config.jsを変更
   };
 \end{tcblisting}
 
-app/page.tsxを作り、以下のようにする
+app/page.tsxを作り,以下のようにする.
 
 
 
@@ -102,22 +102,23 @@ app/page.tsxを作り、以下のようにする
 
 
 
-ブラウザで http://localhost:3000/ にアクセスすると、Hello, Next.js! が表示される
+ブラウザで http://localhost:3000/ にアクセスすると,Hello, Next.js! が表示される.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/01.png}
+  \caption{Hello,Next.js}
+
 \end{figure}
 
 
 
 
-\section{LayoutとHead
- }
+\section{LayoutとHead}
 
-サーバを起動すると自動的にappディレクトリにlayout.tsx,head.tsxというファイルが作られていました。
+サーバを起動すると自動的にappディレクトリにlayout.tsx,head.tsxというファイルが作られていました.
 
-next/headを使って各ページファイルにheadを定義していたのがhead.tsxに書けるようになったみたいですね
+next/headを使って各ページファイルにheadを定義していたのがhead.tsxに書けるようになったみたいですね.
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   export default function Head() {
@@ -133,7 +134,7 @@ next/headを使って各ページファイルにheadを定義していたのがh
 
 
 
-ページの共通レイアウトを定義するファイル
+ページの共通レイアウトを定義するファイル.
 
 
 
@@ -155,7 +156,7 @@ next/headを使って各ページファイルにheadを定義していたのがh
 \end{tcblisting}
 
 
-今までは\_app.tsxなどに下記のようにレイアウトを定義していました
+今までは\_app.tsxなどに下記のようにレイアウトを定義していました.
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   <Layout>
   <Component {...pageProps} />
@@ -165,11 +166,11 @@ next/headを使って各ページファイルにheadを定義していたのがh
 
 
 
-この方法だとページごとにレイアウトを変えることができません。なのでページごとにレイアウトを変えたい場合はgetLayoutを用いる必要がありました。Next.js 13ではレイアウトを変えたいページがあるディレクトリにlayout.tsxを置くことでページごとにレイアウトを変えることができるようになりました。
+この方法だとページごとにレイアウトを変えることができません.なのでページごとにレイアウトを変えたい場合はgetLayoutを用いる必要がありました.Next.js 13ではレイアウトを変えたいページがあるディレクトリにlayout.tsxを置くことでページごとにレイアウトを変えることができるようになりました.
 
 
-ここではダッシュボードページのレイアウトの場合を考えます。
-appディレクトリの中でdashbordディレクトリを作成して以下のようにlayout.tsxを配置するだけです。
+ここではダッシュボードページのレイアウトの場合を考えます.
+appディレクトリの中でdashbordディレクトリを作成して以下のようにlayout.tsxを配置するだけです.
 
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
@@ -185,16 +186,16 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 
 
 
-少し疑問に思ったのがdashboardディレクトリのpage.tsxではRootLayoutは呼ばれずDashboardLayoutのみが呼ばれるのかと思っていました。しかしそんなことはなく入れ子構造で呼び出されるようです。
+少し疑問に思ったのがdashboardディレクトリのpage.tsxではRootLayoutは呼ばれずDashboardLayoutのみが呼ばれるのかと思っていました.しかしそんなことはなく入れ子構造で呼び出されるようです.
 
-公式の画像がわかりやすいので貼っておきます。
-次の機能に行く前にdashboardディレクトリにpage.tsxも作っておきます
+公式の画像がわかりやすいので貼っておきます.
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/02.png}
+  \caption{layout.jsの適用範囲}
 \end{figure}
 
-
+次の機能に行く前にdashboardディレクトリにpage.tsxも作っておきます.
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   export default function DashBoardPage() {
       return <h1>DashBoard Page</h1>;
@@ -257,6 +258,7 @@ app/dashboard/layout.tsx
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/03.png}
+  \caption{DashBoardページ}
 \end{figure}
 
 
@@ -270,29 +272,30 @@ app/dashboard/layout.tsx
 
 \section{React Server Components}
 React Server Components(RSC)はReact18で追加された機能でクライアントと
-サーバ側が協調してアプリケーションをレンダリングできる機能です。
-これによりコンポーネントごとに最適なレンダリング方法を選択できるようになります。
-例えばデータの取得はサーバ側で行い、ユーザの操作によって変わる部分はクライアント側で
-レンダリングするといったことができます。これも公式ドキュメントの図がわかりやすいので貼っておきます。
+サーバ側が協調してアプリケーションをレンダリングできる機能です.
+これによりコンポーネントごとに最適なレンダリング方法を選択できるようになります.
+例えばデータの取得はサーバ側で行い,ユーザの操作によって変わる部分はクライアント側で
+レンダリングするといったことができます.これも公式ドキュメントの図がわかりやすいので貼っておきます.
 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/04.png}
+  \caption{Sever ComponentとClient Componentsの違い}
 \end{figure}
 
 
 
-またSSRとの違いとしてクライアント側のJavaScriptの量を減らせる点です。
-SSRの場合ハイドレーション（サーバ側で生成したDOMとクライアントで生成したDOMを合成する)というステップがありページを早く表示できてもクライアント側でも同じ処理が走るためJavaScriptの量は同じでした。RSCはサーバ側でレンダリングした後残りをクライアント側でレンダリングします。これによってクライアント側に送信されるJavaScriptの量を減らすことができます。
+またSSRとの違いとしてクライアント側のJavaScriptの量を減らせる点です.
+SSRの場合ハイドレーション（サーバ側で生成したDOMとクライアントで生成したDOMを合成する)というステップがありページを早く表示できてもクライアント側でも同じ処理が走るためJavaScriptの量は同じでした.RSCはサーバ側でレンダリングした後残りをクライアント側でレンダリングします.これによってクライアント側に送信されるJavaScriptの量を減らすことができます.
 
 
 \section{サーバーコンポーネントでデータを取得}
 
 
-appディレクトリ内のコンポーネントはデフォルトだとサーバコンポーネントになっています。
-以下のコードはサーバサイドでqiitaの記事リスト取得して表示するものです。
-dashboard/page.tsxを書き換えます。
+appディレクトリ内のコンポーネントはデフォルトだとサーバコンポーネントになっています.
+以下のコードはサーバサイドでqiitaの記事リスト取得して表示するものです.
+dashboard/page.tsxを書き換えます.
 
 
 
@@ -355,15 +358,17 @@ dashboard/page.tsxを書き換えます。
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/06.png}
+  \caption{APIからデータ取得後のページ}
 \end{figure}
 
 
-サイトにカーソルを合わせて右クリックしてページのソースを表示をクリックしてみましょう。
-あらかじめデータが入った状態でサーバから送られてくるのでページソースに記事データが表示されています。
+サイトにカーソルを合わせて右クリックしてページのソースを表示をクリックしてみましょう.
+あらかじめデータが入った状態でサーバから送られてくるのでページソースに記事データが表示されています.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/05.png}
+  \caption{ページのソース表示画面}
 \end{figure}
 
 \section{ローディングUI表示}
@@ -383,15 +388,16 @@ dashboradディレクトリにloading.tsxを作成します
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/07.png}
+  \caption{ローディングUI}
 \end{figure}
 
 
 
 
-これはReact18で追加されたSuspenseという機能が使われていてます。
-Suspenseについて説明するとコンポーネントが表示されるまでの状態を指定することができるコンポーネントです。非同期的なコンポーネントの場合レンダリングに時間がかかるためその間に何を表示させるかをSuspenseを使うと指定できるようになります。
+これはReact18で追加されたSuspenseという機能が使われていてます.
+Suspenseについて説明するとコンポーネントが表示されるまでの状態を指定することができるコンポーネントです.非同期的なコンポーネントの場合レンダリングに時間がかかるためその間に何を表示させるかをSuspenseを使うと指定できるようになります.
 
-具体的な使用例を上げます。下のコードはデータフェッチライブラリ React Queryを使ったデータ取得と表示のサンプルです。
+具体的な使用例を上げます.下のコードはデータフェッチライブラリ React Queryを使ったデータ取得と表示のサンプルです.
 
 
 
@@ -478,10 +484,10 @@ Suspenseを使えば下のコードに置き換えることができます
 
 
 
-変更点はExampleコンポーネントをSuspenseコンポーネントでラップしているのと、Exampleコンポーネントの中のisLoadingプロパティを使った表示切替の部分が消えているところです。Suspenseのいいところはデータ取得をするコンポーネントの中で表示を切り替える処理を書く必要がないことです。これによってより宣言的なコードになりました。またコンポーネントの責務の観点から見てもローディング完了時の表示だけでよくシンプルになっています。
+変更点はExampleコンポーネントをSuspenseコンポーネントでラップしているのと,Exampleコンポーネントの中のisLoadingプロパティを使った表示切替の部分が消えているところです.Suspenseのいいところはデータ取得をするコンポーネントの中で表示を切り替える処理を書く必要がないことです.これによってより宣言的なコードになりました.またコンポーネントの責務の観点から見てもローディング完了時の表示だけでよくシンプルになっています.
 
-Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み取りPageコンポーネントをSuspenseコンポーネントでラップしてくれるようです。
-普通に書くと以下のようになります。
+Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み取りPageコンポーネントをSuspenseコンポーネントでラップしてくれるようです.
+普通に書くと以下のようになります.
 
 
 
@@ -496,13 +502,13 @@ Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み�
 \end{tcblisting}
 
 
-ディレクトリ内にloading.tsxを置いておけば自動的にこのコードを書いた動きになるということですね。
+ディレクトリ内にloading.tsxを置いておけば自動的にこのコードを書いた動きになるということですね.
 
 
 \section{エラーハンドリング}
 
-次にエラーハンドリングを見ていきます。
-dashboardディレクトリにerror.tsxを作成します。
+次にエラーハンドリングを見ていきます.
+dashboardディレクトリにerror.tsxを作成します.
 
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
@@ -533,8 +539,8 @@ dashboardディレクトリにerror.tsxを作成します。
 
 
 
-公式ドキュメントによるとerror.tsxはクライアントコンポーネントである必要がありuse client;と書くことでクライアントコンポーネントして利用することができるようです。
-loading.tsxと同じようにファイルを置いておけば自動的にPageをネストしてエラーハンドリングをしているようです。
+公式ドキュメントによるとerror.tsxはクライアントコンポーネントである必要がありuse client;と書くことでクライアントコンポーネントして利用することができるようです.
+loading.tsxと同じようにファイルを置いておけば自動的にPageをネストしてエラーハンドリングをしているようです.
 
 普通に書いた場合
 
@@ -553,10 +559,10 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 \end{tcolorbox}
 
 
-ただこれを見てわかる通りpageをラップしてるので同階層のコンポーネントのエラーハンドリングはできない感じですね。したいならより上の階層でErrorBoundaryを使う必要がありそうです。
+ただこれを見てわかる通りpageをラップしてるので同階層のコンポーネントのエラーハンドリングはできない感じですね.したいならより上の階層でErrorBoundaryを使う必要がありそうです.
 
-実際にコードを書き換えてエラーを出してみます。
-存在しないURL'hoge'を指定しgetArticelでしていたエラーハンドリングを削除しています。
+実際にコードを書き換えてエラーを出してみます.
+存在しないURL'hoge'を指定しgetArticelでしていたエラーハンドリングを削除しています.
 
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
@@ -611,6 +617,7 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 \begin{figure}[H]
   \centering
   \includegraphics[width=12cm]{./image/03-Tech/chap4/08.png}
+  \caption{エラーハンドリング画面}
 \end{figure}
 
 
