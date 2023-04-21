@@ -128,9 +128,9 @@ next/headを使って各ページファイルにheadを定義していたのがh
   export default function Head() {
       return (
       <>
-      <title></title>
-      <meta content="width=device-width, initial-scale=1" name="viewport" />
-      <link rel="icon" href="/favicon.ico" />
+        <title></title>
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link rel="icon" href="/favicon.ico" />
       </>
       )
     }
@@ -163,7 +163,7 @@ next/headを使って各ページファイルにheadを定義していたのがh
 今までは\_app.tsxなどに下記のようにレイアウトを定義していました.
 \begin{tcblisting}{title={\_app.tsx},listing options={style=customstyle},listing only, breakable}
   <Layout>
-  <Component {...pageProps} />
+    <Component {...pageProps} />
   </Layout>
 \end{tcblisting}
 
@@ -209,7 +209,7 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
       },listing options={style=customstyle},listing only, breakable}
   export default function DashBoardPage() {
       return <h1>DashBoard Page</h1>;
-    }
+  }
 
 \end{tcblisting}
 
@@ -218,25 +218,26 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 \begin{tcblisting}{title={
         app/layout.tsx
       },listing options={style=customstyle},listing only, breakable}
-  export default function RootLayout({
-      children,
-    }: {
-  children: React.ReactNode;
-  }) {
-  return (
-  <html>
-  <head />
-  <body
-  style={{
-      backgroundColor: '#C0C0C0',
-      padding: '50px',
-    }}
-  >
-    {children}
-  </body>
-  </html>
-  );
-  }
+      export default function RootLayout({
+        children,
+      }: {
+        children: React.ReactNode;
+      }) {
+        return (
+          <html>
+            <head />
+            <body
+              style={{
+                backgroundColor: '#C0C0C0',
+                padding: '50px',
+              }}
+            >
+              {children}
+            </body>
+          </html>
+        );
+      }
+      
 
 \end{tcblisting}
 
@@ -246,21 +247,21 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 \begin{tcblisting}{title={
         app/dashboard/layout.tsx
       },listing options={style=customstyle},listing only, breakable}
-  export default function DashboardLayout({
-      children,
-    }: {
-  children: React.ReactNode;
-  }) {
-  return (
-  <section
-  style={{
-      backgroundColor: 'white',
-    }}
-  >
-    {children}
-  </section>
-  );
-  }
+      export default function DashboardLayout({
+        children,
+      }: {
+        children: React.ReactNode;
+      }) {
+        return (
+          <section
+            style={{
+              backgroundColor: 'white',            
+            }}
+          >
+            {children}
+          </section>
+        );
+      }
 \end{tcblisting}
 
 
@@ -321,43 +322,43 @@ dashboard/page.tsxを書き換えます.
   };
 
   async function getArticle(): Promise<Article[]> {
-  const res = await fetch('https://qiita.com/api/v2/items?page=1&per_page=24');
+    const res = await fetch('https://qiita.com/api/v2/items?page=1&per_page=24');
 
-  if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+      }
 
-  return res.json();
+    return res.json();
   }
 
   export default async function DashBoardPage() {
-  const articles = await getArticle();
+    const articles = await getArticle();
 
-  return (
-  <div>
-  <h1>Dashboard</h1>
-  <div
-  style={{
-      display: 'flex',
-      flexDirection: 'column',
-      flexWrap: 'wrap',
-      height: '50vh',
-    }}
-  >
-  {articles?.map((article) => (
-  <div
-  key={article.id}
-  style={{
-      display: 'flex',
-      gap: '10px',
-    }}
-  >
-    <p>{article.title}</p>
-  </div>
-  ))}
-  </div>
-  </div>
-  );
+    return (
+      <div>
+        <h1>Dashboard</h1>
+        <div
+        style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+            height: '50vh',
+          }}
+        >
+          {articles?.map((article) => (
+            <div
+            key={article.id}
+            style={{
+                display: 'flex',
+                gap: '10px',
+              }}
+            >
+              <p>{article.title}</p>
+            </div>
+            ))}
+        </div>
+      </div>
+    );
   }
 
 
@@ -395,12 +396,12 @@ dashboradディレクトリにloading.tsxを作成します
         loading.tsx
       },listing options={style=customstyle},listing only, breakable}
   export default function Loading() {
-      return <p>Loading...</p>;
-    }
+    return <p>Loading...</p>;
+  }
 \end{tcblisting}
 
 
-データの取得が終わりpageコンポーネントがレンダリングされるまでの間はLoadingコンポーネントが表示されます
+データの取得が終わり，pageコンポーネントがレンダリングされるまでの間はLoadingコンポーネントが表示されます
 
 \begin{figure}[H]
   \centering
@@ -427,32 +428,32 @@ Suspenseについて説明するとコンポーネントが表示されるまで
   const queryClient = new QueryClient();
 
   export default function App() {
-  return (
-  <QueryClientProvider client={queryClient}>
-  <Example />
-  </QueryClientProvider>
-  );
+    return (
+    <QueryClientProvider client={queryClient}>
+    <Example />
+    </QueryClientProvider>
+    );
   }
   export function Loading() {
       return <p>Loading...</p>;
-    }
+  }
 
   function Example() {
-      const { isLoading, data } = useQuery('repoData', () =>
-      fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
-      (res) => res.json()
-      )
-      );
+    const { isLoading, data } = useQuery('repoData', () =>
+    fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
+    (res) => res.json()
+    )
+    );
 
-      if (isLoading) return <Loading />;
+    if (isLoading) return <Loading />;
 
-      return (
+    return (
       <div>
         <h1>{data.name}</h1>
         <p>{data.description}</p>
       </div>
-      );
-    }
+    );
+  }
 \end{tcblisting}
 
 
@@ -463,38 +464,40 @@ Suspenseを使えば下のコードに置き換えられます．
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
   import { Suspense } from 'react';
-  import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
-  export default function App() {
+export default function App() {
   return (
-  <QueryClientProvider client={queryClient}>
-  <Suspense fallback={<Loading />}>
-  <Example />
-  </Suspense>
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {/* suspenseコンポーネントででラップ */}
+      <Suspense fallback={<Loading />}>
+        <Example />
+      </Suspense>
+    </QueryClientProvider>
   );
-  }
-  export function Loading() {
-      return <p>Loading...</p>;
-    }
+}
+export function Loading() {
+  return <p>Loading...</p>;
+}
 
-  function Example() {
-      const { data } = useQuery('repoData', () =>
-      fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
+function Example() {
+  const { data } = useQuery('repoData', () =>
+    fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
       (res) => res.json()
-      )
-      );
-      //ローディングプロパティによる表示分岐の削除
+    )
+  );
+  //ローディングプロパティによる表示分岐の削除
 
-      return (
-      <div>
-        <h1>{data.name}</h1>
-        <p>{data.description}</p>
-      </div>
-      );
-    }
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.description}</p>
+    </div>
+  );
+}
+
 \end{tcblisting}
 
 
@@ -564,18 +567,18 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 普通に書いた場合
 
 
-
-\begin{tcolorbox}[breakable]
-  \begin{verbatim}
-    <Layout>
+\begin{tcblisting}{title={
+  dashboard/error.tsx
+},listing options={style=customstyle},listing only, breakable}
+<Layout>
     <Headr/>
     <SideNav/>
-    <ErrorBoundary fallback={<Loading />}>
+    <Suspense fallback={<Loading />}>
       <DashBoardPage />
-    </ErrorBoundary>
-  </Layout>
-  \end{verbatim}
-\end{tcolorbox}
+    </Suspense>
+</Layout>
+\end{tcblisting}
+
 
 
 ただこれを見てわかる通りpageをラップしてるので同階層のコンポーネントのエラーハンドリングはできない感じですね.したいならより上の階層でErrorBoundaryを使う必要がありそうです.
@@ -585,49 +588,33 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 
 
 \begin{tcblisting}{title={
+
         dashboard/page.tsx
       },listing options={style=customstyle},listing only, breakable}
 
-  type Article = {
-  id: number;
-  title: string;
-  };
+      'use client';
 
-  async function getArticle(): Promise<Article[]> {
-      const res = await fetch('hoge');
-
-      return res.json();
-    }
-
-  export default async function DashBoardPage() {
-  const articles = await getArticle();
-
-  return (
-  <div>
-  <h1>Dashboard</h1>
-  <div
-  style={{
-      display: 'flex',
-      flexDirection: 'column',
-      flexWrap: 'wrap',
-      height: '50vh',
-    }}
-  >
-  {articles?.map((article) => (
-  <div
-  key={article.id}
-  style={{
-      display: 'flex',
-      gap: '10px',
-    }}
-  >
-    <p>{article.title}</p>
-  </div>
-  ))}
-  </div>
-  </div>
-  );
-  }
+      import { useEffect } from 'react';
+      
+      export default function Error({
+        error,
+        reset,
+      }: {
+        error: Error;
+        reset: () => void;
+      }) {
+        useEffect(() => {
+          // Log the error to an error reporting service
+          console.error(error);
+        }, [error]);
+      
+        return (
+          <div>
+            <p>Something went wrong!</p>
+            <button onClick={() => reset()}>Reset error boundary</button>
+          </div>
+        );
+      }
 
 \end{tcblisting}
 
@@ -644,4 +631,4 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 
 
 \section{終わりに}
-感想としてはNext.js 13の機能はReact18のSupenseやRSCなどの機能に合わせたアップデートというのを強く感じました
+感想としては，Next.js 13の機能はReact18のSupenseやRSCなどの機能に合わせたアップデートというのを強く感じました
