@@ -52,39 +52,43 @@
 
 TypeScriptとESLintを入れるか聞かれるので入れる.
 \begin{tcblisting}{listing only, breakable}
-  npx create-next-app@latest --ts
+  $ npx create-next-app@latest --ts
 \end{tcblisting}
 
 
 
 pagesディレクトリを削除
 \begin{tcblisting}{listing only, breakable}
-  rm -rf pages
+  $ rm -rf pages
 \end{tcblisting}
+
+
+
+
 
 appディレクトリを作る
 \begin{tcblisting}{listing only, breakable}
-  mkdir app
+  $ mkdir app
 \end{tcblisting}
 
 
 appディレクトリは実験段階の機能なので,next.config.jsを変更する.
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={next.config.js},listing options={style=customstyle},listing only, breakable}
   const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
-  appDir: true,
+    appDir: true,
   },
-  };
+};
 \end{tcblisting}
 
 app/page.tsxを作り,以下のようにする.
 
 
 
-\begin{tcblisting}{listing only, breakable}
+\begin{tcblisting}{title={app/page.tsx},listing only, breakable}
   export default function Page() {
       return <h1>Hello, Next.js!</h1>;
     }
@@ -97,7 +101,7 @@ app/page.tsxを作り,以下のようにする.
 
 
 \begin{tcblisting}{listing only, breakable}
-  npm run dev
+  $ npm run dev
 \end{tcblisting}
 
 
@@ -120,7 +124,7 @@ app/page.tsxを作り,以下のようにする.
 
 next/headを使って各ページファイルにheadを定義していたのがhead.tsxに書けるようになったみたいですね.
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={head.tsx},listing options={style=customstyle},listing only, breakable}
   export default function Head() {
       return (
       <>
@@ -157,7 +161,7 @@ next/headを使って各ページファイルにheadを定義していたのがh
 
 
 今までは\_app.tsxなどに下記のようにレイアウトを定義していました.
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={\_app.tsx},listing options={style=customstyle},listing only, breakable}
   <Layout>
   <Component {...pageProps} />
   </Layout>
@@ -173,7 +177,10 @@ next/headを使って各ページファイルにheadを定義していたのがh
 appディレクトリの中でdashbordディレクトリを作成して以下のようにlayout.tsxを配置するだけです.
 
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+
+\begin{tcblisting}{title={
+        app/dashboard/layout.tsx
+      },listing options={style=customstyle},listing only, breakable}
   export default function DashboardLayout({
       children,
     }: {
@@ -181,6 +188,7 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
   }) {
       return <section>{children}</section>;
     }
+
 \end{tcblisting}
 
 
@@ -196,7 +204,9 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 \end{figure}
 
 次の機能に行く前にdashboardディレクトリにpage.tsxも作っておきます.
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={
+        app/dashboard/layout.tsx
+      },listing options={style=customstyle},listing only, breakable}
   export default function DashBoardPage() {
       return <h1>DashBoard Page</h1>;
     }
@@ -204,9 +214,10 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 \end{tcblisting}
 
 
-違いがわかりやすいように他のファイルも変更します\\
-app/layout.tsx
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+違いがわかりやすいように他のファイルも変更します
+\begin{tcblisting}{title={
+        app/layout.tsx
+      },listing options={style=customstyle},listing only, breakable}
   export default function RootLayout({
       children,
     }: {
@@ -231,8 +242,10 @@ app/layout.tsx
 
 
 
-app/dashboard/layout.tsx
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+
+\begin{tcblisting}{title={
+        app/dashboard/layout.tsx
+      },listing options={style=customstyle},listing only, breakable}
   export default function DashboardLayout({
       children,
     }: {
@@ -299,7 +312,9 @@ dashboard/page.tsxを書き換えます.
 
 
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={
+        dashboard/page.tsx
+      },listing options={style=customstyle},listing only, breakable}
   type Article = {
   id: number;
   title: string;
@@ -376,7 +391,9 @@ dashboard/page.tsxを書き換えます.
 次はローディングUIを表示する機能です
 dashboradディレクトリにloading.tsxを作成します
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={
+        loading.tsx
+      },listing options={style=customstyle},listing only, breakable}
   export default function Loading() {
       return <p>Loading...</p>;
     }
@@ -511,7 +528,9 @@ Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み�
 dashboardディレクトリにerror.tsxを作成します.
 
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={
+        dashboard/error.tsx
+      },listing options={style=customstyle},listing only, breakable}
   'use client';
 
   import { useEffect } from 'react';
@@ -565,7 +584,9 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 存在しないURL'hoge'を指定しgetArticelでしていたエラーハンドリングを削除しています.
 
 
-\begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
+\begin{tcblisting}{title={
+        dashboard/page.tsx
+      },listing options={style=customstyle},listing only, breakable}
 
   type Article = {
   id: number;
