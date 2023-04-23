@@ -1,0 +1,8 @@
+LaTeX:
+  - content/*
+  - image/*
+
+infra:
+  - .github/*
+  - .vscode/*
+  - .devcontainer/*
