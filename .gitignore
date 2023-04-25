@@ -8,3 +8,5 @@
 *.toc
 
 .DS_Store
+
+*.listing
