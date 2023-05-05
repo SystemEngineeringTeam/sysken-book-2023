@@ -6,7 +6,7 @@
 APIサーバーを構築していきます。また、実行環境統一のためDockerを用います。
 
 \section{今回扱うデータの図}
-{../image/03-Tech/chap3/sample_node.png}
+\includegraphics[width=4cm]{./image/03-Tech/chap3/sample_node.png}
 
 \section{ディレクトリ構造}
 \begin{tcolorbox}[breakable]
@@ -45,7 +45,7 @@ APIサーバーを構築していきます。また、実行環境統一のた�
 \end{verbatim}
 \end{tcolorbox}
 
-\subsection{Neo4jに最初にインポートするファイル}
+\section{Neo4jに最初にインポートするファイル}
 point.csv
 \begin{tcolorbox}[breakable]
     \begin{verbatim}
@@ -85,7 +85,7 @@ b,d,Distance,3
 \end{verbatim}
 \end{tcolorbox}
 これらをNeo4jにインポートすることで、先ほどの図を表現することができます。
-{../image/03-Tech/chap3/neo4j_result.png}
+\includegraphics[width=4cm]{./image/03-Tech/chap3/neo4j_result.png}
 無事できてますね。
 
 \subsection{Docker環境の設定}
@@ -334,9 +334,10 @@ coordinate.go
 50 }
 \end{verbatim}
 \end{tcolorbox}
+
 出発地点と目的地を受け取ることでNeo4jにCypherというクエリ言語を用いて最短経路を導出してもらいます。
 \subsection{controllersディレクトリ}
-coordinate_controller.go
+coordinate\_controller.go
 \begin{tcolorbox}[breakable]
 \begin{verbatim}
 1  package controllers
@@ -377,7 +378,7 @@ router.go
 \end{tcolorbox}
 ルーティング先を定義します。
 \subsection{実行ファイル}
-coordinate_controller.go
+coordinate\_controller.go
 \begin{tcolorbox}[breakable]
 \begin{verbatim}
 1  package main
@@ -406,4 +407,4 @@ sample.http
 1  GET http://localhost:8080/coordinate?fr=PointB&to=PointE
 \end{verbatim}
 \end{tcolorbox}
-ここで、 coordinate?fr=PointB&to=PointE の部分を自分の好きな地点にしてリクエストを送ると、最短経路が返されます。
+% ここで、 coordinate?fr=PointB&to=PointE の部分を自分の好きな地点にしてリクエストを送ると、最短経路が返されます。
