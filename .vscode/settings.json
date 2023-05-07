@@ -81,4 +81,8 @@
     // "tab" オプションを指定すると、今開いているエディタを左右に分割し、右側に生成されたPDFを表示するようにしてくれる
     // この PDF ビュアーは LaTeX のビルドによって更新されると同期して内容を更新してくれる。
     "latex-workshop.view.pdf.viewer": "tab",
+    "editor.formatOnSave": true,
+    "[latex]": {
+    "editor.formatOnSave": false
+    }
 }
