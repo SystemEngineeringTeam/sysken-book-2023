@@ -6,10 +6,10 @@
 APIサーバーを構築していきます。また、実行環境統一のためDockerを用います。
 
 \section{今回扱うデータの図}
-\includegraphics[width=4cm]{./image/03-Tech/chap3/sample_node.png}
+\includegraphics[width=10cm]{./image/03-Tech/chap3/sample_node.png}
 
 \section{ディレクトリ構造}
-\begin{tcolorbox}[breakable]
+\begin{tcolorbox}[title=ディレクトリ構造]
     \begin{verbatim}
 ├── build
 │   ├── Docker
@@ -46,8 +46,8 @@ APIサーバーを構築していきます。また、実行環境統一のた�
 \end{tcolorbox}
 
 \section{Neo4jに最初にインポートするファイル}
-point.csv
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=point.csv]
     \begin{verbatim}
 1 point_id:ID,point_name,:LABEL
 2 a,PointA,Point;Position
@@ -58,8 +58,8 @@ point.csv
 \end{verbatim}
 \end{tcolorbox}
 
-route.csv
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=route.csv]
     \begin{verbatim}
 :START_ID,:END_ID,:TYPE,cost:int
 b,a,Distance,1
@@ -85,12 +85,13 @@ b,d,Distance,3
 \end{verbatim}
 \end{tcolorbox}
 これらをNeo4jにインポートすることで、先ほどの図を表現することができます。
-\includegraphics[width=4cm]{./image/03-Tech/chap3/neo4j_result.png}
+\includegraphics[width=10cm]{./image/03-Tech/chap3/neo4j_result.png}
+
 無事できてますね。
 
-compose.yaml
+
 \subsection{Docker環境の設定}
-\begin{tcolorbox}[title=compose.yaml]
+\begin{tcolorbox}[title=docker-compose.yml]
   \begin{verbatim}
 ```
     \begin{verbatim}
@@ -148,7 +149,7 @@ volumesはデータベースに入れるデータ、ログをバインドする�
 environmentではユーザーとパスワード、最初に読み込んでもらうシェルスクリプトの場所を指定します。
 
 go関連のDockerfile
-\begin{tcolorbox}[breakable]
+\begin{tcolorbox}[title=dockerfile]
 \begin{verbatim}
 1  # goバージョン
 2  FROM golang:1.19.3-alpine
@@ -186,7 +187,7 @@ Neo4j関連のDockerfile
 \end{tcolorbox}
 
 csvファイルを読ませるためのシェルスクリプト
-\begin{tcolorbox}[breakable]
+\begin{tcolorbox}[title=import\_data.sh]
 \begin{verbatim}
 1  #!/bin/bash
 2  set -euC
@@ -220,8 +221,8 @@ csvファイルを読ませるためのシェルスクリプト
     
 \section{Goのソースコード}
 \subsection{configディレクトリ}
-config.go
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=config.go]
 \begin{verbatim}
 1  package config
 2
@@ -247,7 +248,7 @@ config.go
 \end{verbatim}
 \end{tcolorbox}
 このファイルでneo4j.yamlの環境変数を読み込みます。
-\begin{tcolorbox}[breakable]
+\begin{tcolorbox}[title=neo4j.yml]
 \begin{verbatim}
 1 neo4j:
 2  user: neo4j
@@ -257,8 +258,8 @@ config.go
 \end{tcolorbox}
 Neo4jと接続するための環境変数です。
 \subsection{dbディレクトリ}
-neo4j.go
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=neo4j.go]
 \begin{verbatim}
 1  package db
 2
@@ -284,8 +285,7 @@ neo4j.go
 \end{tcolorbox}
 このファイルでNeo4jと接続し、セッションを返すようにします。
 \subsection{modelsディレクトリ}
-coordinate.go
-\begin{tcolorbox}[breakable]
+\begin{tcolorbox}[title=coordinate.go]
 \begin{verbatim}
 1  package models
 2
@@ -342,8 +342,8 @@ coordinate.go
 
 出発地点と目的地を受け取ることでNeo4jにCypherというクエリ言語を用いて最短経路を導出してもらいます。
 \subsection{controllersディレクトリ}
-coordinate\_controller.go
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=coordinate\_controller.go]
 \begin{verbatim}
 1  package controllers
 2
@@ -364,8 +364,8 @@ coordinate\_controller.go
 \end{tcolorbox}
 GETリクエストで受け取ったパラメータを models で作成した関数に渡します。
 \subsection{routerディレクトリ}
-router.go
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=router.go]
 \begin{verbatim}
 1  package router
 2
@@ -383,8 +383,7 @@ router.go
 \end{tcolorbox}
 ルーティング先を定義します。
 \subsection{実行ファイル}
-coordinate\_controller.go
-\begin{tcolorbox}[breakable]
+\begin{tcolorbox}[title=coordinate\_controller.go]
 \begin{verbatim}
 1  package main
 2
@@ -406,10 +405,16 @@ docker compose up
 \end{tcolorbox}
 このコマンドを実行することで Neo4j サーバーと Gin サーバーが立ち上がります。
 \subsection{実行確認}
-sample.http
-\begin{tcolorbox}[breakable]
+
+\begin{tcolorbox}[title=sample.http]
 \begin{verbatim}
 1  GET http://localhost:8080/coordinate?fr=PointB&to=PointE
 \end{verbatim}
 \end{tcolorbox}
-% ここで、 coordinate?fr=PointB&to=PointE の部分を自分の好きな地点にしてリクエストを送ると、最短経路が返されます。
+今回はVscodeの拡張機能であるREST Clientを用いて実行確認を行います。
+
+ここで、 coordinate?fr=PointB\&to=PointE の部分を自分の好きな地点にしてリクエストを送ると、最短経路が返されます。
+
+\section{おわりに}
+このチャプターではグラフDBとGo言語を用いたAPIサーバーの建て方を説明しました。
+Gin、Neo4jは奥が深いので、もし気になった方はぜひ自分で調べて触ってみてください。
