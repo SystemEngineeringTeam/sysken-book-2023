@@ -29,19 +29,19 @@ DiscordのBotの作り方(メモ)という記事の「1.Discord上のBotの作�
 Botを実行するPythonファイルを作ります。
 \begin{shaded}
   \begin{verbatim}
-mkdir message_discord_bot
-cd message_discord_bot
-touch main.py
+$ mkdir message_discord_bot
+$ cd message_discord_bot
+$ touch main.py
 \end{verbatim}
 \end{shaded}
 
 \subsection{discord.pyの準備}
-ここからはdiscord.pyのドキュメントを見ながら環境構築をしていきます。
+ここからはライブラリ(discord.py) のドキュメントを見ながら環境構築をしていきます。
 \footnote{discord.pyドキュメント\url{https://discordpy.readthedocs.io/ja/latest/intro.html\#basic-concepts (参照2023.3.29)}}
 PythonでDiscordのAPIを操作するために必要なライブラリをインストールします。先ほど作成したディレクトリにアクセスして、以下のコマンドで discord.py をインストールします。
 \begin{shaded}
   \begin{verbatim}
-python -m pip install -U discord.py
+$ python3 -m pip install -U discord.py
 \end{verbatim}
 \end{shaded}
 次に、先ほど作成したmain.pyを以下のソースコードに書き換えます。
@@ -70,7 +70,8 @@ python -m pip install -U discord.py
   \item ポータルサイトの「Bot」の「MESSAGE CONTENT INTENT」を有効にする
 \end{itemize}
 'my token goes here'は取得したBotのアクセストークンを書きます。
-以上の設定が終わったところで python3 main.py を実行すると、Botのサーバが立ち上がります。Botサーバ起動後にBotのいるサーバでメッセージを投げると、コマンドライン上に「書いた人」と「メッセージ」がそのまま出力されます。
+以上の設定が終わったところで python3 main.py を実行すると、Botのサーバが立ち上がります。Bot のいるサーバの任意のチャンネルでメッセージを投稿すると
+、コマンドライン上に「書いた人」と「メッセージ」がそのまま出力されます。
 
 \subsection{環境変数の設定}
 ソースコードに直接トークンを書いてしまうと、Githubでソースコードをホスティングするときにトークンキーが他の人にバレてしまいます。
@@ -83,7 +84,7 @@ python -m pip install -U discord.py
 Pythonの中で.envファイルに書かれている変数を取得するために dotenv というライブラリを使用します。以下のようにインストールします。
 \begin{shaded}
   \begin{verbatim}
-pip install python-dotenv
+$ pip3 install python-dotenv
 \end{verbatim}
 \end{shaded}
 インストール後にmain.pyに下記のコードを付け加えて下さい。\\
@@ -120,5 +121,13 @@ Botに機能をつけるには上記のソースコードの8行目と10行目�
 2,3行目でメッセージを書いた人がBotなら処理を終了させています。\\
 4行目でメッセージが投稿されたチャンネル取得しています。\\
 5行目のmessage.contentはメッセージの内容で、今回の場合「仕事終わった」というメッセージをチャンネルに投稿すると、メッセージが投稿されたチャンネルにBotが「お疲れ様」と返答します。
+
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{./image/03-Tech/chap1/bot.png}
+  \caption{動作例}
+\end{figure}
 \section{まとめ}
 今回はDiscordのBotの作り方を説明しました。上記の「仕事終わった」や「お疲れ様」に当たる部分を変えたりして自分好みに改良してみて下さい。

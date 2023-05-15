@@ -39,13 +39,21 @@
 }
 
 
+\lstset{
+  numbers=left, 
+  numberstyle=\small, 
+  numbersep=4pt, 
+  framexleftmargin=15pt
+}
+
 
 \chapter{Next.js 13 触ってみた}
 \section{はじめに}
 10 月後半に行われた Next.js Conf 2022 で発表された Next.js 13 を実際に触って
 みたのでその内容を書きます。当初は全体を網羅して書く予定だったのですが量が多
 かったの少し絞ってます。対象読者としてある程度 React や Next.js を触っている
-人を対象としています。
+人を対象としています。この記事は半年程前に書いたため現在と異なっている場合があります。
+執筆字のNextのバージョンは13.0.5です。
 
 
 \section{プロジェクト作成からサーバ起動}
@@ -75,7 +83,7 @@ appディレクトリを作る。
 appディレクトリは実験段階の機能なので,next.config.jsを変更する。
 
 \begin{tcblisting}{title={next.config.js},listing options={style=customstyle},listing only, breakable}
-  const nextConfig = {
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
@@ -91,7 +99,7 @@ app/page.tsxを作り、以下のようにする。
 \begin{tcblisting}{title={app/page.tsx},listing only, breakable}
   export default function Page() {
       return <h1>Hello, Next.js!</h1>;
-    }
+  }
 \end{tcblisting}
 
 
@@ -147,13 +155,13 @@ next/headを使って各ページファイルにheadを定義していたのがh
   export default function RootLayout({
       children,
     }: {
-  children: React.ReactNode
+      children: React.ReactNode
   }) {
       return (
-      <html>
-        <head />
-        <body>{children}</body>
-      </html>
+        <html>
+          <head />
+          <body>{children}</body>
+        </html>
       )
     }
 
@@ -311,7 +319,7 @@ RSCはサーバ側でレンダリングした後残りをクライアント側�
 
 
 appディレクトリ内のコンポーネントはデフォルトだとサーバコンポーネントになっています。
-以下のコードはサーバサイドでqiitaの記事リスト取得して表示するものです。
+以下のコードはサーバサイドでqiitaの記事リストを取得して表示するものです。
 dashboard/page.tsxを書き換えます。
 
 
@@ -329,7 +337,7 @@ dashboard/page.tsxを書き換えます。
 
     if (!res.ok) {
         throw new Error('Failed to fetch data');
-      }
+    }
 
     return res.json();
   }
@@ -467,7 +475,7 @@ Suspenseを使えば下のコードに置き換えられます。
 
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
-  import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 const queryClient = new QueryClient();
@@ -519,11 +527,11 @@ Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み�
 
 \begin{tcblisting}{listing only, breakable}
   <Layout>
-  <Headr/>
-  <SideNav/>
-  <Suspense fallback={<Loading />}>
-  <DashBoardPage />
-  </Suspense>
+    <Headr/>
+    <SideNav/>
+    <Suspense fallback={<Loading />}>
+      <DashBoardPage />
+    </Suspense>
   </Layout>
 \end{tcblisting}
 
@@ -540,14 +548,14 @@ dashboardディレクトリにerror.tsxを作成します。
 \begin{tcblisting}{title={
         dashboard/error.tsx
       },listing options={style=customstyle},listing only, breakable}
-  'use client';
+'use client';
 
-  import { useEffect } from 'react';
+import { useEffect } from 'react';
 
-  export default function Error({
-      error,
-      reset,
-    }: {
+export default function Error({
+  error,
+  reset,
+}: {
   error: Error;
   reset: () => void;
   }) {
@@ -558,11 +566,11 @@ dashboardディレクトリにerror.tsxを作成します。
 
   return (
   <div>
-  <p>Something went wrong!</p>
-  <button onClick={() => reset()}>Reset error boundary</button>
+    <p>Something went wrong!</p>
+    <button onClick={() => reset()}>Reset error boundary</button>
   </div>
   );
-  }
+}
 \end{tcblisting}
 
 
@@ -579,9 +587,9 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 <Layout>
     <Headr/>
     <SideNav/>
-    <Suspense fallback={<Loading />}>
+    <ErrorBoundary fallback={<Loading />}>
       <DashBoardPage />
-    </Suspense>
+    </ErrorBoundary>
 </Layout>
 \end{tcblisting}
 
@@ -598,29 +606,29 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
         dashboard/page.tsx
       },listing options={style=customstyle},listing only, breakable}
 
-      'use client';
+'use client';
 
-      import { useEffect } from 'react';
+import { useEffect } from 'react';
       
-      export default function Error({
-        error,
-        reset,
-      }: {
-        error: Error;
-        reset: () => void;
-      }) {
-        useEffect(() => {
-          // Log the error to an error reporting service
-          console.error(error);
-        }, [error]);
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
       
-        return (
-          <div>
-            <p>Something went wrong!</p>
-            <button onClick={() => reset()}>Reset error boundary</button>
-          </div>
-        );
-      }
+  return (
+    <div>
+      <p>Something went wrong!</p>
+      <button onClick={() => reset()}>Reset error boundary</button>
+    </div>
+  );
+}
 
 \end{tcblisting}
 
