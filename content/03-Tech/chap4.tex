@@ -52,7 +52,8 @@
 10 月後半に行われた Next.js Conf 2022 で発表された Next.js 13 を実際に触って
 みたのでその内容を書きます。当初は全体を網羅して書く予定だったのですが量が多
 かったの少し絞ってます。対象読者としてある程度 React や Next.js を触っている
-人を対象としています。
+人を対象としています。この記事は半年程前に書いたため現在と異なっている場合があります。
+執筆字のNextのバージョンは13.0.5です。
 
 
 \section{プロジェクト作成からサーバ起動}
@@ -154,13 +155,13 @@ next/headを使って各ページファイルにheadを定義していたのがh
   export default function RootLayout({
       children,
     }: {
-  children: React.ReactNode
+      children: React.ReactNode
   }) {
       return (
-      <html>
-        <head />
-        <body>{children}</body>
-      </html>
+        <html>
+          <head />
+          <body>{children}</body>
+        </html>
       )
     }
 
