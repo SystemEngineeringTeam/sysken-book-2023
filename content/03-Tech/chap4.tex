@@ -75,7 +75,7 @@ appディレクトリを作る。
 appディレクトリは実験段階の機能なので,next.config.jsを変更する。
 
 \begin{tcblisting}{title={next.config.js},listing options={style=customstyle},listing only, breakable}
-  const nextConfig = {
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
@@ -91,7 +91,7 @@ app/page.tsxを作り、以下のようにする。
 \begin{tcblisting}{title={app/page.tsx},listing only, breakable}
   export default function Page() {
       return <h1>Hello, Next.js!</h1>;
-    }
+  }
 \end{tcblisting}
 
 
