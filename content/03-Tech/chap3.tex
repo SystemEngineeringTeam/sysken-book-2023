@@ -1,3 +1,10 @@
+\lstdefinestyle{mystyle}{
+  basicstyle=\ttfamily,
+  breakatwhitespace=false,
+  breaklines=true,
+  keepspaces=true,
+}
+
 \chapter{Gin × Neo4j × Docker で最短経路を返してくれるAPIサーバを建てる}
 
 \section{Gin × Neo4j × Docker で最短経路を返してくれるAPIサーバを建てる}
@@ -89,59 +96,56 @@ b,d,Distance,3
 
 無事できてますね。
 
-\subsection{Docker環境の設定}
-\begin{tcolorbox}[title=docker-compose.yml]
-\begin{verbatim}
-1 version: "3"
-2 services:
-3   go:
-4     container_name: NEO4JAPI_GO
-5     build:
-6       context: ./docker/go
-7       dockerfile: Dockerfile
-8     stdin_open: true
-9     tty: true
-10    volumes:
-11      - ../server:/server
-12    ports:
-13      - 8080:8080
-14    networks:
-15      app_net:
-16        ipv4_address: 192.168.0.1
-17    depends_on:
-18      - "neo4j"
-19
-20  neo4j:
-21    container_name: NEO4JAPI_NEO4J
-22    build:
-23      context: ./Docker/neo4j
-24      dockerfile: Dockerfile
-25    restart: always
-26    ports:
-27      - 57474:7474
-28      - 57687:7687
-29    volumes:
-30      - ./Docker/neo4j/volumes/data:/data
-31      - ./Docker/neo4j/volumes/logs:/logs
-32      - ./Docker/neo4j/volumes/conf:/conf
-33      - ./Docker/neo4j/volumes/import:/import
-34      - ./Docker/neo4j/volumes/script:/script
-35    environment:
-36      - NEO4J_AUTH=neo4j/admin
-37      - EXTENSION_SCRIPT=/script/import_data.sh
-38    networks:
-39      app_net:
-40        ipv4_address: 192.168.0.2
-41
-42 networks:
-43  app_net:
-44    driver: bridge
-45    ipam:
-46      driver: default
-47      config:
-48        - subnet: 192.168.0.0/24
-\end{verbatim}
-\end{tcolorbox}
+\begin{tcblisting}{title={neo4j.go},listing only,breakable, listing options={style=mystyle}}
+  1 version: "3"
+  2 services:
+  3   go:
+  4     container_name: NEO4JAPI_GO
+  5     build:
+  6       context: ./docker/go
+  7       dockerfile: Dockerfile
+  8     stdin_open: true
+  9     tty: true
+  10    volumes:
+  11      - ../server:/server
+  12    ports:
+  13      - 8080:8080
+  14    networks:
+  15      app_net:
+  16        ipv4_address: 192.168.0.1
+  17    depends_on:
+  18      - "neo4j"
+  19
+  20  neo4j:
+  21    container_name: NEO4JAPI_NEO4J
+  22    build:
+  23      context: ./Docker/neo4j
+  24      dockerfile: Dockerfile
+  25    restart: always
+  26    ports:
+  27      - 57474:7474
+  28      - 57687:7687
+  29    volumes:
+  30      - ./Docker/neo4j/volumes/data:/data
+  31      - ./Docker/neo4j/volumes/logs:/logs
+  32      - ./Docker/neo4j/volumes/conf:/conf
+  33      - ./Docker/neo4j/volumes/import:/import
+  34      - ./Docker/neo4j/volumes/script:/script
+  35    environment:
+  36      - NEO4J_AUTH=neo4j/admin
+  37      - EXTENSION_SCRIPT=/script/import_data.sh
+  38    networks:
+  39      app_net:
+  40        ipv4_address: 192.168.0.2
+  41
+  42 networks:
+  43  app_net:
+  44    driver: bridge
+  45    ipam:
+  46      driver: default
+  47      config:
+  48        - subnet: 192.168.0.0/24
+\end{tcblisting}
 
 
 volumesはデータベースに入れるデータ、ログをバインドするための場所を指定しています。
@@ -150,6 +154,7 @@ environmentではユーザーとパスワード、最初に読み込んでもら
 go関連のDockerfile。
 \begin{tcolorbox}[title=Dockerfile]
 \begin{verbatim}
+
 1  # goバージョン
 2  FROM golang:1.19.3-alpine
 3  # アップデートとgitのインストール
@@ -167,8 +172,6 @@ go関連のDockerfile。
 
 Neo4j関連のDockerfile。
 \begin{tcolorbox}[title=Dockerfile]
-\begin{verbatim}
-```
 \begin{verbatim}
 1  # goバージョン
 2  FROM golang:1.19.3-alpine
@@ -260,12 +263,7 @@ Neo4jと接続するための環境変数です。
 \subsection{dbディレクトリ}
 
 
-\lstdefinestyle{mystyle}{
-  basicstyle=\ttfamily,
-  breakatwhitespace=false,
-  breaklines=true,
-  keepspaces=true,
-}
+
 
 
 \begin{tcblisting}{title={neo4j.go},listing only,breakable, listing options={style=mystyle}}
