@@ -329,7 +329,7 @@ dashboard/page.tsxを書き換えます。
 
     if (!res.ok) {
         throw new Error('Failed to fetch data');
-      }
+    }
 
     return res.json();
   }
@@ -467,7 +467,7 @@ Suspenseを使えば下のコードに置き換えられます。
 
 
 \begin{tcblisting}{listing options={style=customstyle},listing only, breakable}
-  import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 const queryClient = new QueryClient();
@@ -519,11 +519,11 @@ Next.js 13ではloading.tsxを置いてあげるとNext.js側がそれを読み�
 
 \begin{tcblisting}{listing only, breakable}
   <Layout>
-  <Headr/>
-  <SideNav/>
-  <Suspense fallback={<Loading />}>
-  <DashBoardPage />
-  </Suspense>
+    <Headr/>
+    <SideNav/>
+    <Suspense fallback={<Loading />}>
+      <DashBoardPage />
+    </Suspense>
   </Layout>
 \end{tcblisting}
 
@@ -540,14 +540,14 @@ dashboardディレクトリにerror.tsxを作成します。
 \begin{tcblisting}{title={
         dashboard/error.tsx
       },listing options={style=customstyle},listing only, breakable}
-  'use client';
+'use client';
 
-  import { useEffect } from 'react';
+import { useEffect } from 'react';
 
-  export default function Error({
-      error,
-      reset,
-    }: {
+export default function Error({
+  error,
+  reset,
+}: {
   error: Error;
   reset: () => void;
   }) {
@@ -558,11 +558,11 @@ dashboardディレクトリにerror.tsxを作成します。
 
   return (
   <div>
-  <p>Something went wrong!</p>
-  <button onClick={() => reset()}>Reset error boundary</button>
+    <p>Something went wrong!</p>
+    <button onClick={() => reset()}>Reset error boundary</button>
   </div>
   );
-  }
+}
 \end{tcblisting}
 
 
@@ -579,9 +579,9 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
 <Layout>
     <Headr/>
     <SideNav/>
-    <Suspense fallback={<Loading />}>
+    <ErrorBoundary fallback={<Loading />}>
       <DashBoardPage />
-    </Suspense>
+    </ErrorBoundary>
 </Layout>
 \end{tcblisting}
 
@@ -598,29 +598,29 @@ loading.tsxと同じようにファイルを置いておけば自動的にPage�
         dashboard/page.tsx
       },listing options={style=customstyle},listing only, breakable}
 
-      'use client';
+'use client';
 
-      import { useEffect } from 'react';
+import { useEffect } from 'react';
       
-      export default function Error({
-        error,
-        reset,
-      }: {
-        error: Error;
-        reset: () => void;
-      }) {
-        useEffect(() => {
-          // Log the error to an error reporting service
-          console.error(error);
-        }, [error]);
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
       
-        return (
-          <div>
-            <p>Something went wrong!</p>
-            <button onClick={() => reset()}>Reset error boundary</button>
-          </div>
-        );
-      }
+  return (
+    <div>
+      <p>Something went wrong!</p>
+      <button onClick={() => reset()}>Reset error boundary</button>
+    </div>
+  );
+}
 
 \end{tcblisting}
 
