@@ -92,7 +92,6 @@ b,d,Distance,3
 \subsection{Docker環境の設定}
 \begin{tcolorbox}[title=docker-compose.yml]
 \begin{verbatim}
-```
 1 version: "3"
 2 services:
 3   go:
@@ -143,6 +142,8 @@ b,d,Distance,3
 48        - subnet: 192.168.0.0/24
 \end{verbatim}
 \end{tcolorbox}
+
+
 volumesはデータベースに入れるデータ、ログをバインドするための場所を指定しています。
 environmentではユーザーとパスワード、最初に読み込んでもらうシェルスクリプトの場所を指定します。
 
@@ -255,88 +256,98 @@ csvファイルを読ませるためのシェルスクリプト。
 \end{verbatim}
 \end{tcolorbox}
 Neo4jと接続するための環境変数です。
+
 \subsection{dbディレクトリ}
 
-\begin{tcolorbox}[title=neo4j.go]
-\begin{verbatim}
+
+\lstdefinestyle{mystyle}{
+  basicstyle=\ttfamily,
+  breakatwhitespace=false,
+  breaklines=true,
+  keepspaces=true,
+}
+
+
+\begin{tcblisting}{title={neo4j.go},listing only,breakable, listing options={style=mystyle}}
 1  package db
 2
 3  import (
-4	  "log"
+4   "log"
 5
-6	  "neo4japi/server/config"
+6   "neo4japi/server/config"
 7
-8	  "github.com/neo4j/neo4j-go-driver/v4/neo4j"
+8   "github.com/neo4j/neo4j-go-driver/v4/neo4j"
 9  )
 10
 11 func GetDriverAndSession() neo4j.Session {
-12	 n := config.GetNeo4jConfig()
-13	 dr, err := neo4j.NewDriver(n.GetString("neo4j.uri"), neo4j.BasicAuth(n.GetString("neo4j.user"), n.GetString("neo4j.password"), ""))
-14	 if err != nil {
-15		 log.Fatal(err)
-16	 }
-17	 ses := dr.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeRead})
-18	 return ses
+12   n := config.GetNeo4jConfig()
+13   dr, err := neo4j.NewDriver(n.GetString("neo4j.uri"), neo4j.BasicAuth(n.GetString("neo4j.user"), n.GetString("neo4j.password"), ""))
+14   if err != nil {
+15     log.Fatal(err)
+16   }
+17   ses := dr.NewSession(neo4j.SessionConfig{AccessMode: neo4j.AccessModeRead})
+18   return ses
 19 }
-20
-\end{verbatim}
-\end{tcolorbox}
+  \end{tcblisting}
+  
 このファイルでNeo4jと接続し、セッションを返すようにします。
 \subsection{modelsディレクトリ}
-\begin{tcolorbox}[title=coordinate.go]
-\begin{verbatim}
-1  package models
-2
-3  import (
-4	  "fmt"
-5	  "log"
-6
-7	  "neo4japi/server/db"
-8
-9	  "github.com/neo4j/neo4j-go-driver/v4/neo4j"
-10 )
-11
-12 type Route struct {
-13	 Position string `json:"point"`
-14 }
-15
-16 func FindRoute(fr, to string) []*Route {
-17 	 var r []*Route
-18	 ses := db.GetDriverAndSession()
-19	 defer ses.Close()
-20	 cyp := fmt.Sprintf(`
-21		 MATCH (from:Position {point_name: "%s"}), (to:Position {point_name: "%s"}), 
-22			 path=allShortestPaths ((from)-[distance:Distance*]->(to))
-23		 WITH
-24			 [position in nodes(path) | position.point_name] as name,
-25		 REDUCE(totalMinutes = 0, d in distance | totalMinutes + d.cost) as 所要時間
-26		 RETURN name
-27		 ORDER BY 所要時間
-28		 LIMIT 10;
-29	 `, fr, to)
-30
-31	 _, err := ses.ReadTransaction(func(transaction neo4j.Transaction) (interface{}, error) {
-32		 result, err := transaction.Run(cyp, nil)
-33		 if err != nil {
-34			 return nil, err
-35		 }
-36		 if result.Next() {
-37			 name, _ := result.Record().Get("name")
-38			 nameAr := name.([]interface{})
-39
-40			 for i := 0; i < len(nameAr); i++ {
-41				 r = append(r, &Route{nameAr[i].(string)})
-42			 }
-43		 }
-44		 return nil, result.Err()
-45	 })
-46	 if err != nil {
-47		 log.Fatal(err)
-48	 }
-49	 return r
-50 }
-\end{verbatim}
-\end{tcolorbox}
+
+
+\begin{tcblisting}{title={coordinate.go},listing only,breakable, listing options={style=mystyle}}
+  1  package models
+  2
+  3  import (
+  4   "fmt"
+  5   "log"
+  6
+  7   "neo4japi/server/db"
+  8
+  9   "github.com/neo4j/neo4j-go-driver/v4/neo4j"
+  10 )
+  11
+  12 type Route struct {
+  13   Position string `json:"point"`
+  14 }
+  15
+  16 func FindRoute(fr, to string) []*Route {
+  17   var r []*Route
+  18   ses := db.GetDriverAndSession()
+  19   defer ses.Close()
+  20   cyp := fmt.Sprintf(`
+  21     MATCH (from:Position {point_name: "%s"}), (to:Position {point_name: "%s"}), 
+  22       path=allShortestPaths ((from)-[distance:Distance*]->(to))
+  23     WITH
+  24       [position in nodes(path) | position.point_name] as name,
+  25     REDUCE(totalMinutes = 0, d in distance | totalMinutes + d.cost) as 所要時間
+  26     RETURN name
+  27     ORDER BY 所要時間
+  28     LIMIT 10;
+  29   `, fr, to)
+  30
+  31   _, err := ses.ReadTransaction(func(transaction neo4j.Transaction) (interface{}, error) {
+  32     result, err := transaction.Run(cyp, nil)
+  33     if err != nil {
+  34       return nil, err
+  35     }
+  36     if result.Next() {
+  37       name, _ := result.Record().Get("name")
+  38       nameAr := name.([]interface{})
+  39
+  40       for i := 0; i < len(nameAr); i++ {
+  41         r = append(r, &Route{nameAr[i].(string)})
+  42      }
+  43     }
+  44     return nil, result.Err()
+  45   })
+  46   if err != nil {
+  47     log.Fatal(err)
+  48   }
+  49   return r
+  50 }
+    \end{tcblisting}
+
+
 
 出発地点と目的地を受け取ることでNeo4jにCypherというクエリ言語を用いて最短経路を導出してもらいます。
 \subsection{controllersディレクトリ}
