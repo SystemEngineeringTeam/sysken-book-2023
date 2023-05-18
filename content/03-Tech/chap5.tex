@@ -171,18 +171,7 @@ go関連のDockerfile。
 Neo4j関連のDockerfile。
 \begin{tcolorbox}[title=Dockerfile]
 \begin{verbatim}
-1  # goバージョン
-2  FROM golang:1.19.3-alpine
-3  # アップデートとgitのインストール
-4  RUN apk add --update &&  apk add git
-5  # appディレクトリの作成
-6  RUN mkdir /server
-7  # ワーキングディレクトリの設定
-8  WORKDIR /server
-9  # ホストのファイルをコンテナの作業ディレクトリに移行
-10 ADD . /server
-11 # main.goを実行
-12 CMD ["go", "run", "main.go"]
+1  FROM neo4j:4.4.9
 \end{verbatim}
 \end{tcolorbox}
 
