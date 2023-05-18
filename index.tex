@@ -17,11 +17,15 @@
 \usepackage{url}
 \usepackage{pdfpages}
 
+% 余白を狭くする
+\geometry{left=20mm,right=20mm,top=25mm,bottom=25mm}
 
 \tcbuselibrary{breakable,listings}
 \definecolor{shadecolor}{gray}{0.80}
 
-
+% あとがき用のコマンド集
+\renewcommand{\textbf}[1]{{\bfseries\sffamily#1}}
+\newcommand{\bhline}[1]{\noalign{\hrule height #1}}  
 
 % section
 \titleformat{\section}[block]{}{}{0pt}
@@ -49,21 +53,34 @@
 
 \begin{document}
 
+% タイトル部分
 \include{./content/01-Title/title}
 
 %目次を自動的に作る。
 \tableofcontents
+% Measures to prevent the first page of the table of contents from sinking below
+\addtocontents{toc}{\protect\enlargethispage{-10.0\baselineskip}}
 
+% シス研の紹介
 \include{./content/02-AboutSysken/overviewOfSysLab}
-\include{./content/03-Tech/chap1}
+
+% 技術枠
 \include{./content/03-Tech/chap2}
 \include{./content/03-Tech/chap3}
 \include{./content/03-Tech/chap4}
-\include{./content/04-Intarasting/chap1}
-\include{./content/04-Intarasting/chap2}
-\include{./content/05-End/atTheEnd}
-\include{./content/05-End/afterword-n}
+\include{./content/03-Tech/chap5}
+\include{./content/03-Tech/chap6}
 
+
+% 日常枠
+\include{./content/04-Intarasting/chap7}
+\include{./content/04-Intarasting/chap8}
+
+
+% 奥付け
+\include{./content/05-End/afterword-n}
+\include{./content/05-End/atTheEnd}
+\include{./content/05-End/end}
 
 
 
