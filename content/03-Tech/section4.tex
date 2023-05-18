@@ -80,7 +80,7 @@ appディレクトリを作る。
 \end{tcblisting}
 
 
-appディレクトリは実験段階の機能なので,next.config.jsを変更する。
+appディレクトリは実験段階の機能なので、next.config.jsを変更する。
 
 \begin{tcblisting}{title={next.config.js},listing options={style=customstyle},listing only, breakable}
 const nextConfig = {
@@ -311,15 +311,15 @@ React Server Components(RSC)はReact18で追加された機能でクライアン
 
 
 またSSRとの違いとしてクライアント側のJavaScriptの量を減らせる点です。
-SSRの場合ハイドレーション（サーバ側で生成したDOMとクライアントで生成したDOMを合成する)というステップがありページを早く表示できてもクライアント側でも同じ処理が走るためJavaScriptの量は同じでした。
-RSCはサーバ側でレンダリングした後残りをクライアント側でレンダリングします.これによってクライアント側に送信されるJavaScriptの量を減らせます。
+SSRの場合ハイドレーション（サーバ側で生成したDOMとクライアントで生成したDOMを合成する）というステップがありページを早く表示できてもクライアント側でも同じ処理が走るためJavaScriptの量は同じでした。
+RSCはサーバ側でレンダリングした後、残りをクライアント側でレンダリングします。これによってクライアント側に送信されるJavaScriptの量を減らせます。
 
 
 \subsection{サーバーコンポーネントでデータを取得}
 
 
 appディレクトリ内のコンポーネントはデフォルトだとサーバコンポーネントになっています。
-以下のコードはサーバサイドでqiitaの記事リストを取得して表示するものです。
+以下のコードはサーバサイドでQiitaの記事リストを取得して表示するものです。
 dashboard/page.tsxを書き換えます。
 
 
