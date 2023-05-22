@@ -94,7 +94,7 @@ b,d,Distance,3
 
 無事できてますね。
 
-\begin{tcblisting}{title={neo4j.go},listing only,breakable, listing options={style=mystyle}}
+\begin{tcblisting}{title={docker-compose-yml},listing only,breakable, listing options={style=mystyle}}
   1 version: "3"
   2 services:
   3   go:
@@ -171,18 +171,7 @@ go関連のDockerfile。
 Neo4j関連のDockerfile。
 \begin{tcolorbox}[title=Dockerfile]
 \begin{verbatim}
-1  # goバージョン
-2  FROM golang:1.19.3-alpine
-3  # アップデートとgitのインストール
-4  RUN apk add --update &&  apk add git
-5  # appディレクトリの作成
-6  RUN mkdir /server
-7  # ワーキングディレクトリの設定
-8  WORKDIR /server
-9  # ホストのファイルをコンテナの作業ディレクトリに移行
-10 ADD . /server
-11 # main.goを実行
-12 CMD ["go", "run", "main.go"]
+1  FROM neo4j:4.4.9
 \end{verbatim}
 \end{tcolorbox}
 
