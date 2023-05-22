@@ -206,12 +206,7 @@ appディレクトリの中でdashbordディレクトリを作成して以下の
 
 少し疑問に思ったのがdashboardディレクトリのpage.tsxではRootLayoutは呼ばれずDashboardLayoutのみが呼ばれるのかと思っていました。しかし、実際には入れ子構造で呼び出されるようです。
 
-公式の画像がわかりやすいので貼っておきます。
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=12cm]{./image/03-Tech/chap4/02.png}
-  \caption{layout.jsの適用範囲}
-\end{figure}
+
 
 次の機能に行く前にdashboardディレクトリにpage.tsxも作っておきます。
 \begin{tcblisting}{title={
@@ -299,14 +294,7 @@ React Server Components(RSC)はReact18で追加された機能でクライアン
 サーバ側が協調してアプリケーションをレンダリングできる機能です。
 これによりコンポーネントごとに最適なレンダリング方法を選択できるようになります。
 例えばデータの取得はサーバ側で行い,ユーザの操作によって変わる部分はクライアント側で
-レンダリングできます。これも公式ドキュメントの図がわかりやすいので貼っておきます。
-
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=12cm]{./image/03-Tech/chap4/04.png}
-  \caption{Sever ComponentとClient Componentsの違い}
-\end{figure}
+レンダリングできます。
 
 
 
